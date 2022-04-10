@@ -1,10 +1,20 @@
-parasails.registerPage('welcome', {
+parasails.registerPage('create-post', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    modal: '',
-    pageLoadedAt: Date.now()
+    syncing: false,
+    cloudError: '',
+    formErrors: { /* … */ },
+    formData: {
+
+    },
+    // Form rules
+    formRules: {
+      title: {required: true},
+      selectedMediaFilename: {required: true}
+    },
+    maxFileSizeExceeded: false,
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -16,28 +26,15 @@ parasails.registerPage('welcome', {
   mounted: async function() {
     //…
   },
-
-
+  computed: {
+    uploadEnabled: function() {
+      return this.me.emailStatus === 'confirmed';
+    }
+  },
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-
-    clickOpenExampleModalButton: async function() {
-      this.goto('/welcome/hello');
-      // Or, without deep links, instead do:
-      // ```
-      // this.modal = 'example';
-      // ```
-    },
-
-    closeExampleModal: async function() {
-      this.goto('/welcome');
-      // Or, without deep links, instead do:
-      // ```
-      // this.modal = '';
-      // ```
-    },
-
+    //…
   }
 });

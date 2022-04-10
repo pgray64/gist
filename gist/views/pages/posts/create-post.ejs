@@ -1,0 +1,50 @@
+<div id="create-post" v-cloak>
+    <div class="container">
+        <account-notification-banner></account-notification-banner>
+    </div>
+    <div class="container pt-5 pb-5">
+        <h1>Create a post</h1>
+        <hr/>
+        <ajax-form action="createPost" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <div class="alert alert-warning" v-if="!uploadEnabled">
+                            To limit spam, email verification is required if you want to create a post.
+                        </div>
+                        <label for="name">Post title</label>
+                        <input class="form-control" id="title" name="title" type="text" :disabled="syncing || !uploadEnabled" :class="[formErrors.title ? 'is-invalid' : '']" v-model.trim="formData.title" placeholder="Post title" autocomplete="off">
+                        <div class="invalid-feedback" v-if="formErrors.title">Please enter a title.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <span class="file-upload-button btn btn-sm btn-success" :class="{disabled: syncing || !uploadEnabled}">
+                            <span class="button-text">Select an image</span>
+                            <input id="mediaFile" name="mediaFile" type="file"
+                                 placeholder="Select an image" autocomplete="off"
+                                 :disabled="syncing || !uploadEnabled" accept=".png,.gif,.jpg,.jpeg" class="file-input" @change="changeFileInput($event.target.files)"/>
+                            </span>
+                            <span v-if="formData.selectedMediaFilename" class="font-weight-bold">{{formData.selectedMediaFilename}}</span>
+                            <div class="invalid-feedback" style="display:block" v-if="formErrors.selectedMediaFilename">A valid image file is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+
+                    <cloud-error v-if="cloudError==='maxFileSizeExceeded' || maxFileSizeExceeded">Max upload size is <%=sails.config.custom.userMaxMediaSizeFriendly%>.</cloud-error>
+                    <cloud-error v-else-if="cloudError==='fileTypeNotAllowed'">You can only upload an audio or video file.</cloud-error>
+                    <cloud-error v-else-if="cloudError"></cloud-error>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group text-right">
+                        <a class="btn btn-outline-info" href="/welcome">Cancel</a>
+                        <ajax-button type="submit" :syncing="syncing" :disabled="!uploadEnabled || maxFileSizeExceeded" class="btn btn-dark">Submit</ajax-button>
+                    </div>
+                </div>
+            </div>
+        </ajax-form>
+    </div>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
