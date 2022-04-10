@@ -154,7 +154,19 @@ without necessarily having a billing card.`
       description: 'A JS timestamp (epoch ms) representing the moment at which this user most recently interacted with the backend while logged in (or 0 if they have not interacted with the backend at all yet).',
       example: 1502844074211
     },
-
+    username: {
+      type: 'string',
+      required: true,
+      unique: true,
+      maxLength: 50,
+      description: 'Username - should be lowercase'
+    },
+    displayUsername: {
+      type: 'string',
+      required: true,
+      maxLength: 50,
+      description: 'Displayed version of username, without lowercase applied'
+    }
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝

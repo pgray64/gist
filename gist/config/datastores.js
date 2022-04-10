@@ -48,8 +48,10 @@ module.exports.datastores = {
     *    (See https://sailsjs.com/config/datastores for help.)                 *
     *                                                                          *
     ***************************************************************************/
-    // adapter: 'sails-mysql',
-    // url: 'mysql://user:password@host:port/database',
+    adapter: 'sails-postgresql',
+    // url: 'postgresql://tinyshop_local:test@localhost:5432/tinyshop',
+    // use env var: sails_datastores__default__url
+    ssl: false
 
   },
 

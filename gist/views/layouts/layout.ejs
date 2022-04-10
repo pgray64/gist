@@ -5,7 +5,7 @@
 } %><!DOCTYPE html>
 <html>
   <head>
-    <title>NEW_APP_NAME</title>
+    <title>Gist</title>
 
     <% /* Viewport tag for sensible mobile support */ %>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -47,7 +47,7 @@
     <div purpose="page-wrap">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/">
                     <img src="/images/logo-sm.png" width="100" height="43"/>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,35 +56,34 @@
 
                 <div class="collapse navbar-collapse" id="navbarColor03">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
+                            <a class="nav-link" href="/">Trending</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav">
+                        <% if(me) { %>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary mr-0 mr-lg-2 mb-2 mb-lg-0" href="/account">My profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-secondary" href="/logout">Log out</a>
+                        </li>
+                        <% } else { %>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary mr-0 mr-lg-2 mb-2 mb-lg-0" href="/login">Log in</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-secondary" href="/signup">Sign up</a>
+                        </li>
+                        <% } %>
+                    </ul>
+                    <%/*
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="text" placeholder="Search">
                         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                     </form>
+                    */%>
+
                 </div>
             </div>
 
@@ -92,13 +91,13 @@
 
       <!-- Alert if email has not been confirmed -->
       <% if(me&&me.emailChangeCandidate) { %>
-      <div class="container-fluid">
+      <div class="container">
         <div class="alert alert-secondary mt-2 small" role="alert">
         Your updated email address needs verification. Until you click the link sent to <strong><%= me.emailChangeCandidate %></strong>, you'll still need to sign in as <strong><%= me.emailAddress %></strong>.
         </div>
       </div>
       <% } else if(me&&me.emailStatus === 'unconfirmed') { %>
-      <div class="container-fluid">
+      <div class="container">
         <div class="alert alert-secondary mt-2 small" role="alert">
         Your email address still needs verification. Your account access may be limited until you click the link sent to <strong><%= me.emailChangeCandidate ? me.emailChangeCandidate : me.emailAddress%></strong>.
         </div>
@@ -116,7 +115,7 @@
           <small class="nav-item d-inline-block"><a class="nav-link text-info px-1 px-sm-3" href="/logout">Sign out</a></small>
           <% } %>
         </div>
-        <small purpose="footer-copy">Copyright &copy; <%= sails.config.custom.platformCopyrightYear %> <a target="_blank" href="NEW_APP_COMPANY_ABOUT_HREF">NEW_APP_COMPANY_NAME</a>. <br class="d-block d-sm-none"/>All rights reserved.</small>
+        <small purpose="footer-copy">Copyright &copy; <%= sails.config.custom.platformCopyrightYear %> <a target="_blank" href="NEW_APP_COMPANY_ABOUT_HREF">VidCafe LLC</a>. <br class="d-block d-sm-none"/>All rights reserved.</small>
       </footer>
     </div>
 

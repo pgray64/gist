@@ -26,6 +26,11 @@ the account verification message.)`,
       description: 'The email address for the new account, e.g. m@example.com.',
       extendedDescription: 'Must be a valid email address.',
     },
+    username: {
+      required: true,
+      type: 'string',
+      description: 'Username that is also the display name and profile slug'
+    },
 
     password: {
       required: true,
@@ -62,19 +67,33 @@ the account verification message.)`,
       statusCode: 409,
       description: 'The provided email address is already in use.',
     },
+    usernameAlreadyInUse: {
+      statusCode: 409,
+      description: 'The provided username is unavailable.',
+    },
 
   },
 
 
-  fn: async function ({emailAddress, password, fullName}) {
+  fn: async function ({emailAddress, username, password, fullName}) {
 
-    var newEmailAddress = emailAddress.toLowerCase();
-
+    let newEmailAddress = emailAddress.toLowerCase();
+    let usernameIsValid = await sails.helpers.validateUsername(username);
+    if (!usernameIsValid) {
+      throw 'usernameAlreadyInUse';
+    }
+    let usernameLowerCase = username.toLowerCase();
+    let usernameTaken = await User.count({username: usernameLowerCase}) > 0;
+    if (usernameTaken) {
+      throw 'usernameAlreadyInUse';
+    }
     // Build up data for the new user record and save it to the database.
     // (Also use `fetch` to retrieve the new ID so that we can use it below.)
     var newUserRecord = await User.create(_.extend({
       fullName,
       emailAddress: newEmailAddress,
+      username: usernameLowerCase,
+      displayUsername: username,
       password: await sails.helpers.passwords.hashPassword(password),
       tosAcceptedByIp: this.req.ip
     }, sails.config.custom.verifyEmailAddresses? {

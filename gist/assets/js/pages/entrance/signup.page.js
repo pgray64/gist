@@ -13,9 +13,10 @@ parasails.registerPage('signup', {
     // Form rules
     formRules: {
       fullName: {required: true},
+      username: {required: true},
       emailAddress: {required: true, isEmail: true},
       password: {required: true},
-      confirmPassword: {required: true, sameAs: 'password'},
+      // confirmPassword: {required: true, sameAs: 'password'},
       agreed: {required: true},
     },
 
@@ -27,6 +28,8 @@ parasails.registerPage('signup', {
 
     // Success state when form has been submitted
     cloudSuccess: false,
+
+    isPasswordHidden: true,
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗

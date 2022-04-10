@@ -30,10 +30,8 @@ parasails.registerComponent('account-notification-banner', {
   //  ╩ ╩ ╩ ╩ ╩╩═╝
   template: `
   <div>
-    <div class="container-fluid">
-      <div class="alert alert-warning mt-2 small" role="alert" v-if="notificationText">
-        {{notificationText}}
-      </div>
+    <div class="alert alert-warning mt-2 small" role="alert" v-if="notificationText">
+      {{notificationText}}
     </div>
   </div>
   `,
