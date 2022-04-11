@@ -66,11 +66,17 @@
         <div class="col">{{me.billingCardExpMonth}}/{{me.billingCardExpYear}}</div>
       </div>
     </div>
-    <div class="alert alert-danger" v-else-if="isBillingEnabled && cloudError">
+    <div class="alert alert-danger alert-dismissible" v-else-if="isBillingEnabled && cloudError">
       There was an error updating your credit card information. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
-    <div class="alert alert-secondary" v-else-if="isBillingEnabled">
+    <div class="alert alert-secondary alert-dismissible" v-else-if="isBillingEnabled">
       You have not linked a payment source to your account. In order to access paid features, you'll need to provide your credit card information. (Don't worry: you will only be charged when you've reached the limit of your free plan.)
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
   </div>
 

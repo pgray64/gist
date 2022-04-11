@@ -1,39 +1,61 @@
 <div id="create-post" v-cloak>
     <div class="container">
         <account-notification-banner></account-notification-banner>
+        <div class="alert alert-warning alert-dismissible" v-if="!uploadEnabled">
+            You need to verify your email address in order to create a post.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </div>
     <div class="container pt-5 pb-5">
         <h1>Create a post</h1>
         <hr/>
-        <ajax-form action="createPost" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
+        <ajax-form :action="isImagePost ? 'createImagePost' : 'createPost'" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <div class="alert alert-warning" v-if="!uploadEnabled">
-                            To limit spam, email verification is required if you want to create a post.
+                        <label class="mr-2" for="postTypeBtns">Post type</label>
+                        <div class="btn-group btn-group-toggle" id="postTypeBtns" >
+                            <label class="btn btn-outline-primary" :class="{'active': !isImagePost}">
+                                <input type="radio" name="options" id="textPost" autocomplete="off"  value="text" @click="formData.postType='text'"> Text
+                            </label>
+                            <label class="btn btn-outline-primary" :class="{'active': isImagePost}" >
+                                <input type="radio" name="options" id="imagePost" autocomplete="off" value="image" @click="formData.postType='image'"> Image
+                            </label>
                         </div>
-                        <label for="name">Post title</label>
-                        <input class="form-control" id="title" name="title" type="text" :disabled="syncing || !uploadEnabled" :class="[formErrors.title ? 'is-invalid' : '']" v-model.trim="formData.title" placeholder="Post title" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Post title</label>
+                        <input class="form-control" id="title" maxlength="100" name="title" type="text" :disabled="syncing || !uploadEnabled" :class="[formErrors.title ? 'is-invalid' : '']" v-model.trim="formData.title" placeholder="Post title" autocomplete="off">
                         <div class="invalid-feedback" v-if="formErrors.title">Please enter a title.</div>
                     </div>
-
-                    <div class="form-group">
+                    <div class="form-group" v-if="isImagePost">
+                        <label for="button-text" class="mr-2">Post content</label>
                         <span class="file-upload-button btn btn-sm btn-success" :class="{disabled: syncing || !uploadEnabled}">
-                            <span class="button-text">Select an image</span>
-                            <input id="mediaFile" name="mediaFile" type="file"
-                                 placeholder="Select an image" autocomplete="off"
-                                 :disabled="syncing || !uploadEnabled" accept=".png,.gif,.jpg,.jpeg" class="file-input" @change="changeFileInput($event.target.files)"/>
-                            </span>
-                            <span v-if="formData.selectedMediaFilename" class="font-weight-bold">{{formData.selectedMediaFilename}}</span>
-                            <div class="invalid-feedback" style="display:block" v-if="formErrors.selectedMediaFilename">A valid image file is required.</div>
+                        <span class="button-text">Select an image</span>
+                        <input id="imageFile" name="mediaFile" type="file"
+                               placeholder="Select an image" autocomplete="off"
+                               :disabled="syncing || !uploadEnabled" accept=".png,.gif,.jpg,.jpeg" class="file-input" @change="changeFileInput($event.target.files)"/>
+                        </span>
+                        <span v-if="formData.textContent" class="font-weight-bold">{{formData.textContent}}</span>
+                        <div class="invalid-feedback" style="display:block" v-if="formErrors.textContent">A valid image file is required.</div>
+                    </div>
+                    <div class="form-group" v-else>
+                        <label for="textContent">Post content</label>
+                        <textarea style="resize:none" rows="8" class="form-control" id="textContent" name="textContent"
+                                  maxLength=2000 type="text" :disabled="syncing || !uploadEnabled"
+                                  :class="[formErrors.textContent ? 'is-invalid' : '']" v-model.trim="formData.textContent" placeholder="Post content" autocomplete="off">
+                        </textarea>
+                        <div class="invalid-feedback" v-if="formErrors.title">Please enter the content for your post.</div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6">
 
-                    <cloud-error v-if="cloudError==='maxFileSizeExceeded' || maxFileSizeExceeded">Max upload size is <%=sails.config.custom.userMaxMediaSizeFriendly%>.</cloud-error>
-                    <cloud-error v-else-if="cloudError==='fileTypeNotAllowed'">You can only upload an audio or video file.</cloud-error>
+                    <cloud-error v-if="cloudError==='maxFileSizeExceeded' || maxFileSizeExceeded">Max upload size is <%=sails.config.custom.userMaxPostImageSizeFriendly%>.</cloud-error>
+                    <cloud-error v-else-if="cloudError==='fileTypeNotAllowed'">You can only an image file.</cloud-error>
                     <cloud-error v-else-if="cloudError"></cloud-error>
                 </div>
                 <div class="col-sm-6">
