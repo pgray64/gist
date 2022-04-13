@@ -45,7 +45,7 @@
   </head>
   <body>
     <div purpose="page-wrap">
-        <nav class="navbar navbar-expand-lg navbar-light">
+        <nav class="navbar navbar-expand-md navbar-light">
             <div class="container">
                 <a class="navbar-brand" href="/">
                     <img src="/images/logo-sm.png" width="100" height="43"/>
@@ -63,22 +63,22 @@
                     <ul class="navbar-nav">
                         <% if(me) { %>
                         <li class="nav-item">
-                            <a class="btn btn-outline-primary mr-0 mr-lg-2 mb-2 mb-lg-0" href="/account">My profile</a>
+                            <a class="btn btn-outline-primary mr-0 mr-md-2 mb-2 mb-md-0 d-block d-md-inline-block" href="/account">My profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-secondary" href="/logout">Log out</a>
+                            <a class="btn btn-secondary d-block d-md-inline-block" href="/logout">Log out</a>
                         </li>
                         <% } else { %>
                         <li class="nav-item">
-                            <a class="btn btn-outline-primary mr-0 mr-lg-2 mb-2 mb-lg-0" href="/login">Log in</a>
+                            <a class="btn btn-outline-primary mr-0 mr-md-2 mb-2 mb-md-0 d-block d-md-inline-block" href="/login">Log in</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-secondary" href="/signup">Sign up</a>
+                            <a class="btn btn-secondary d-block d-md-inline-block" href="/signup">Sign up</a>
                         </li>
                         <% } %>
                     </ul>
                     <%/*
-                    <form class="form-inline my-2 my-lg-0">
+                    <form class="form-inline my-2 my-md-0">
                         <input class="form-control mr-sm-2" type="text" placeholder="Search">
                         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                     </form>
