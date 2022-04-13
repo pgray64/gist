@@ -11,7 +11,7 @@
     <div class="container pt-5 pb-5">
         <h1>Create a post</h1>
         <hr/>
-        <ajax-form :action="isImagePost ? 'createImagePost' : 'createPost'" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
+        <ajax-form :action="isImagePost ? 'createImagePost' : 'createPost'" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-group">
                         <label for="title">Post title</label>
-                        <input class="form-control" id="title" maxlength="100" name="title" type="text" :disabled="syncing || !uploadEnabled" :class="[formErrors.title ? 'is-invalid' : '']" v-model.trim="formData.title" placeholder="Post title" autocomplete="off">
+                        <input class="form-control" id="title" maxlength="50" name="title" type="text" :disabled="syncing || !uploadEnabled" :class="[formErrors.title ? 'is-invalid' : '']" v-model.trim="formData.title" placeholder="Post title" autocomplete="off">
                         <div class="invalid-feedback" v-if="formErrors.title">Please enter a title.</div>
                     </div>
                     <div class="form-group" v-if="isImagePost">

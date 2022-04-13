@@ -1,0 +1,14 @@
+<div id="post" v-cloak>
+    <div class="container" v-if="me">
+        <account-notification-banner></account-notification-banner>
+
+    </div>
+    <div class="container pt-5 pb-5">
+        <h5><a :href="getUserUrl(username)">{{username}}</a></h5>
+        <h4 class="user-content">
+            {{title}}
+        </h4>
+        <div v-if="contentType === 'text'" class="border border-light p-2 rounded user-content">{{textContent}}</div>
+    </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

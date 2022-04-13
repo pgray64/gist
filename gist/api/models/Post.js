@@ -12,6 +12,12 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
+    title: {
+      type: 'string',
+      maxLength: 50,
+      description: 'Title of post',
+      required: true
+    },
     textContent: {
       type: 'string',
       maxLength: 2000,
@@ -23,7 +29,8 @@ module.exports = {
     },
     contentType: {
       type: 'string',
-      isIn: ['text', 'image', 'reblog']
+      isIn: ['text', 'image', 'reblog'],
+      required: true
     },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
@@ -36,7 +43,7 @@ module.exports = {
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
     user: {
       model: 'user',
-      allowNull: false,
+      required: true,
       autoMigrations: { index: true }
     },
     rebloggedPost: {

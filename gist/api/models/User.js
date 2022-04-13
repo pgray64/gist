@@ -159,13 +159,13 @@ without necessarily having a billing card.`
       type: 'string',
       required: true,
       unique: true,
-      maxLength: 50,
+      maxLength: 30,
       description: 'Username - should be lowercase'
     },
     displayUsername: {
       type: 'string',
       required: true,
-      maxLength: 50,
+      maxLength: 30,
       description: 'Displayed version of username, without lowercase applied'
     }
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
