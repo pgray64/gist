@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.67.0",
     "@sailshq/connect-redis": "^3.2.1",
     "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
@@ -13,7 +14,9 @@
     "sails-hook-organics": "^2.0.0",
     "sails-hook-orm": "^4.0.0",
     "sails-hook-sockets": "^2.0.0",
-    "sails-postgresql": "^4.0.0"
+    "sails-hook-uploads": "^0.4.3",
+    "sails-postgresql": "^4.0.0",
+    "skipper-s3": "^0.6.0"
   },
   "devDependencies": {
     "eslint": "5.16.0",

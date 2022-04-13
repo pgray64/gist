@@ -30,11 +30,16 @@ module.exports = {
     if (!post) {
       throw 'notFound';
     }
+    let imageUrl;
+    if (post.contentType === 'image') {
+      let path = require('path');
+      imageUrl = path.join(sails.config.custom.userContentS3EdgeUrl, post.imageContent);
+    }
     return {
       id,
       title: post.title,
       textContent: post.textContent,
-      imageContent: post.imageContent,
+      imageUrl: imageUrl,
       contentType: post.contentType,
       createdAt: post.createdAt,
       userId: post.user.id,

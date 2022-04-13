@@ -16,6 +16,7 @@ parasails.registerPage('create-post', {
       textContent: {required: true},
     },
     maxFileSizeExceeded: false,
+    imagePreviewUrl: ''
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -55,13 +56,28 @@ parasails.registerPage('create-post', {
         return;
       }
       var selectedFile = files[0];
+      // If you cancel from the native upload window when you already
+      // have a photo tracked, then we just avast (return early).
+      // In this case, we just leave whatever you had there before.
+      if (!selectedFile && this.formData.selectedFile) {
+        return;
+      }
       this.formData.imageFile = selectedFile;
+      // Set up the file preview for the UI:
+      var reader = new FileReader();
+      reader.onload = (event) => {
+        this.imagePreviewUrl = event.target.result;
+        // Unbind this "onload" event.
+        delete reader.onload;
+        console.log('img: ' + this.imagePreviewUrl)
+      };
       this.formData.textContent = selectedFile.name;
       this.formErrors.textContent = false;
+      reader.readAsDataURL(selectedFile);
       this.maxFileSizeExceeded = this.selectedFileTooLarge();
     },
     selectedFileTooLarge: function() {
-      return this.formData.mediaFile && this.formData.mediaFile.size > this.maxFileSize;
+      return this.formData.imageFile && this.formData.imageFile.size > this.maxFileSize;
     }
   }
 });
