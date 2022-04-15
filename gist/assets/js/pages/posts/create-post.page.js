@@ -8,7 +8,7 @@ parasails.registerPage('create-post', {
     formErrors: { /* … */ },
     formData: {
       postType: 'text',
-      textContent: ''
+      textContent: '',
     },
     // Form rules
     formRules: {
@@ -63,6 +63,7 @@ parasails.registerPage('create-post', {
         return;
       }
       this.formData.imageFile = selectedFile;
+      this.formData.imageType = selectedFile.type;
       // Set up the file preview for the UI:
       var reader = new FileReader();
       reader.onload = (event) => {

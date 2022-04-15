@@ -35,7 +35,11 @@ module.exports = {
     },
     allowedFileTypes: {
       type: 'ref',
-      description: 'array of allowed filetypes in mimetype format, e.g. ["image/jpg"]'
+      description: 'optional array of allowed filetypes in mimetype format, e.g. ["image/jpg"]'
+    },
+    forcedExtension: {
+      type: 'string',
+      description: 'optional file extension to save including dot, e.g. ".png"'
     }
   },
 
@@ -57,7 +61,7 @@ module.exports = {
   },
 
 
-  fn: async function ({fileToUpload, s3Origin, bucketName, isPublic, dirName, maxFileSizeBytes, allowedFileTypes}) {
+  fn: async function ({fileToUpload, s3Origin, bucketName, isPublic, dirName, maxFileSizeBytes, allowedFileTypes, forcedExtension}) {
     const s3Client = new S3Client({
       endpoint: 'https://' + s3Origin, // Find your endpoint in the control panel, under Settings. Prepend "https://".
       region: sails.config.custom.s3Region, // Must be "us-east-1" when creating new Spaces. Otherwise, use the region in your endpoint (e.g. nyc3).
@@ -66,15 +70,15 @@ module.exports = {
         secretAccessKey: sails.config.custom.s3Secret // Secret access key defined through an environment variable.
       }
     });
-    /* let util = require('util');
-    sails.log.info('fileToUpload: ' + util.inspect(fileToUpload)); */
+
     let opts = {
       key: sails.config.custom.s3Key,
       secret: sails.config.custom.s3Secret,
       endpoint: s3Origin,
       bucket: bucketName,
       dirname: dirName,
-      headers: {}
+      headers: {},
+      extname: forcedExtension
     };
     let result = await sails.uploadOne(fileToUpload, opts);
     if (!result) {

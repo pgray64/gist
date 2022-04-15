@@ -15,6 +15,11 @@ module.exports = {
     imageFile: {
       required: true,
       example: '==='
+    },
+    imageType: {
+      required: true,
+      isIn: sails.config.custom.userPostAllowedFiletypes,
+      description: 'mimetype for image that we do not trust, but will force re-encode to'
     }
   },
 
@@ -46,21 +51,34 @@ module.exports = {
   },
 
 
-  fn: async function ({title, priceUsd, imageFile}, exits) {
+  fn: async function ({title, priceUsd, imageFile, imageType}, exits) {
     if (this.req.me.emailStatus !== 'confirmed') {
       throw 'emailNotVerified';
     }
     if (!imageFile || imageFile.isNoop) {
       throw 'badRequest';
     }
+    let outputFileType;
+    let outputExt;
+    if (imageType === 'image/gif') {
+      outputFileType = 'gif';
+      outputExt = '.gif';
+    } else {
+      outputFileType = 'jpeg';
+      outputExt = '.jpg'
+    }
+    let convertedImage = await sails.helpers.convertImage.with({
+      sourceStream: imageFile,
+      outputFileType
+    });
     let result = await sails.helpers.uploadToS3.with({
-      fileToUpload: imageFile,
+      fileToUpload: convertedImage,
       s3Origin: sails.config.custom.s3Endpoint,
       bucketName: sails.config.custom.userContentS3Bucket,
       isPublic: true,
       dirName: this.req.me.id + '/images',
       maxFileSizeBytes: sails.config.custom.userMaxPostImageSizeBytes,
-      allowedFileTypes: sails.config.custom.userPostAllowedFiletypes
+      forcedExtension: outputExt
     }).intercept((err) => {
       if (err.code === 'fileTypeNotAllowed') {
         return 'fileTypeNotAllowed';
