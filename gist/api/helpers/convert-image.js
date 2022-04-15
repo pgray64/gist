@@ -2,10 +2,10 @@ const sharp = require("sharp");
 module.exports = {
 
 
-  friendlyName: 'Convert image',
+  friendlyName: 'Convert an image',
 
 
-  description: '',
+  description: 'Builds and returns piped stream for converting image later',
 
 
   inputs: {
@@ -28,7 +28,6 @@ module.exports = {
     success: {
       description: 'All done.',
     },
-
   },
 
 

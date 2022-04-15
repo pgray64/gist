@@ -110,8 +110,8 @@ module.exports.custom = {
   userContentS3Bucket: 'gist-dev-cdn',
   userContentS3EdgeUrl: 'https://gist-dev-cdn.nyc3.cdn.digitaloceanspaces.com',
   // File limits
-  userMaxPostImageSizeBytes: 5 * 1024 * 1024,
-  userMaxPostImageSizeFriendly: '5 MB',
+  userMaxPostImageSizeBytes: 10 * 1024 * 1024,
+  userMaxPostImageSizeFriendly: '10 MB',
   userPostAllowedFiletypes: ['image/png', 'image/jpeg', 'image/gif', 'image/bmp'],
   // Pagination
   userListPostsPerPage: 10,

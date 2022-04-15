@@ -70,7 +70,6 @@ parasails.registerPage('create-post', {
         this.imagePreviewUrl = event.target.result;
         // Unbind this "onload" event.
         delete reader.onload;
-        console.log('img: ' + this.imagePreviewUrl)
       };
       this.formData.textContent = selectedFile.name;
       this.formErrors.textContent = false;

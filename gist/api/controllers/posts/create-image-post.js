@@ -65,7 +65,7 @@ module.exports = {
       outputExt = '.gif';
     } else {
       outputFileType = 'jpeg';
-      outputExt = '.jpg'
+      outputExt = '.jpg';
     }
     let convertedImage = await sails.helpers.convertImage.with({
       sourceStream: imageFile,
@@ -85,7 +85,7 @@ module.exports = {
       } else if (err.code === 'maxFileSizeExceeded') {
         return 'maxFileSizeExceeded';
       }
-      return err;
+      return 'uploadFailed';
     });
 
     let newFields = {
