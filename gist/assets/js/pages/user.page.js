@@ -1,4 +1,4 @@
-parasails.registerPage('post', {
+parasails.registerPage('user', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
@@ -20,8 +20,8 @@ parasails.registerPage('post', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    getUserUrl: function(username) {
-      return '/' + username;
+    getImageUrl: function(img) {
+      return this.imageBaseUrl + '/' + img;
     }
   }
 });

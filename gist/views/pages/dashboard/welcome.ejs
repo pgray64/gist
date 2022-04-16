@@ -2,13 +2,13 @@
     <div class="container">
         <account-notification-banner></account-notification-banner>
     </div>
-  <div class="container pt-5 pb-5">
+  <div class="container pt-1 pt-sm-3 pb-5">
     <h1>Welcome!</h1>
     <hr/>
     <p>This is a page that only logged-in people can visit. Don't you feel special? Try clicking on a button below to do some things you can't do when you're logged out.</p>
     <div class="buttons">
         <a class="btn btn-info mr-2" href="/posts/create-post">Create a post</a>
-        <a class="btn btn-outline-info" href="/account/profile">Update my profile</a>
+        <a class="btn btn-outline-info" :href="getUserUrl()">My content</a>
     </div>
   </div>
 </div>

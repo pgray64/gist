@@ -8,7 +8,7 @@
             </button>
         </div>
     </div>
-    <div class="container pt-5 pb-5">
+    <div class="container pt-1 pt-sm-3 pb-5">
         <h1>Create a post</h1>
         <hr/>
         <ajax-form :action="isImagePost ? 'createImagePost' : 'createPost'" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm">

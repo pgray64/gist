@@ -35,6 +35,7 @@ module.exports.routes = {
 
   'GET /posts/create-post': { action: 'posts/view-create-post' },
   'GET /post/:id': { action: 'view-post' },
+  'GET /:username': { action: 'view-user' },
 
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗

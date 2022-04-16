@@ -63,10 +63,17 @@
                     <ul class="navbar-nav">
                         <% if(me) { %>
                         <li class="nav-item">
-                            <a class="btn btn-outline-primary mr-0 mr-md-2 mb-2 mb-md-0 d-block d-md-inline-block" href="/account">My profile</a>
+                            <a class="btn btn-info mr-0 mr-md-2 mb-2 mb-md-0 d-block d-md-inline-block" href="/posts/create-post">
+                                <span class="fa fa-plus mr-1"></span>
+                                <span>New post</span>
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="btn btn-secondary d-block d-md-inline-block" href="/logout">Log out</a>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle btn btn-outline-primary mr-0 mr-md-2 mb-2 mb-md-0 d-block d-md-inline-block" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Account</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/account">Settings</a>
+                                <a class="dropdown-item" href="/logout">Log out</a>
+                            </div>
                         </li>
                         <% } else { %>
                         <li class="nav-item">
@@ -181,6 +188,7 @@
     <script src="/js/pages/legal/terms.page.js"></script>
     <script src="/js/pages/post.page.js"></script>
     <script src="/js/pages/posts/create-post.page.js"></script>
+    <script src="/js/pages/user.page.js"></script>
     <!--SCRIPTS END-->
 
     <% /* Display an overlay if the current browser is not supported.
