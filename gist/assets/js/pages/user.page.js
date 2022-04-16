@@ -3,7 +3,7 @@ parasails.registerPage('user', {
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    //…
+    page: 0,
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -22,6 +22,12 @@ parasails.registerPage('user', {
   methods: {
     getImageUrl: function(img) {
       return this.imageBaseUrl + '/' + img;
+    },
+    async loadPosts() {
+      this.page++;
+      let result = await Cloud.listUserPosts(this.user.id, this.page);
+      this.hasMore = result.hasMore;
+      this.posts = this.posts.concat(result.posts);
     }
   }
 });

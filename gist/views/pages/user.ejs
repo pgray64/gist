@@ -3,11 +3,18 @@
     <div class="container pt-1 pt-sm-3 pb-5">
         <h5>{{user.displayUsername}}</h5>
         <div class="row mt-5">
-            <div class="col-12 text-center text-sm-left">
-                <div v-if="posts.length < 1">
-                    <i>No posts</i>
+            <div v-if="posts.length < 1" class="col-12" >
+                <div class="text-center">
+                    <div style="max-width: 650px;" class="d-inline-block">
+                        <h2>No posts found</h2>
+                        <hr/>
+                        <h5 class="px-3"><a class="text-info" :href="'/' + user.username">{{user.displayUsername}}</a> hasn't submitted anything.</h5>
+                    </div>
+
                 </div>
-                <div v-else>
+            </div>
+            <div v-else class="col-12 text-center text-sm-left">
+                <div>
                     <div class="card d-inline-block mb-3 mr-3 align-top text-left" style="width: 15rem;" v-for="post in posts">
                         <a :href="'/post/' + post.id" class="text-decoration-none">
                             <div v-if="post.contentType ==='image'" class="card-img-top d-flex bg-light border-bottom align-items-center justify-content-center" style="overflow: hidden;height: 10rem">
@@ -22,6 +29,9 @@
                                 <a :href="'/post/' + post.id" :title="post.title">{{post.title}}</a>
                             </div>
                         </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-info" @click="loadPosts()" v-if="hasMore">Load more</button>
                     </div>
                 </div>
             </div>

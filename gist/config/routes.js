@@ -19,7 +19,7 @@ module.exports.routes = {
   'GET /faq':                { action:   'view-faq' },
   'GET /legal/terms':        { action:   'legal/view-terms' },
   'GET /legal/privacy':      { action:   'legal/view-privacy' },
-  'GET /contact':            { action:   'view-contact' },
+  /*'GET /contact':            { action:   'view-contact' },*/
 
   'GET /signup':             { action: 'entrance/view-signup' },
   'GET /email/confirm':      { action: 'entrance/confirm-email' },
@@ -64,9 +64,11 @@ module.exports.routes = {
   'POST  /api/v1/entrance/signup':                       { action: 'entrance/signup' },
   'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
-  'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },
+  /*'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },*/
   'POST  /api/v1/observe-my-session':                 { action: 'observe-my-session', hasSocketFeatures: true },
   'POST /api/v1/posts/create-post': { action: 'posts/create-post' },
   'POST /api/v1/posts/create-image-post': { action: 'posts/create-image-post' },
+  'GET /api/v1/user/list-user-posts': { action: 'user/list-user-posts' },
+
 
 };

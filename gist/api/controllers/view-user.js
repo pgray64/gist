@@ -26,23 +26,26 @@ module.exports = {
     if (!usernameIsValid) {
       throw 'notFound';
     }
-    let user = await User.findOne({select: ['displayUsername'], where: {username}});
+    let user = await User.findOne({select: ['displayUsername', 'username'], where: {username}});
     if (!user) {
       throw 'notFound';
     }
+    const perPage = sails.config.custom.userListPostsPerPage;
     let posts = await Post.find({
       select: ['title', 'textContent', 'imageContent', 'contentType'],
       where: {
         user: user.id,
       },
-      limit: sails.config.custom.userListPostsPerPage,
+      limit: perPage,
       sort: 'id desc'
     })
     // Respond with view.
     return {
       user,
       posts,
-      imageBaseUrl: sails.config.custom.userContentS3EdgeUrl
+      imageBaseUrl: sails.config.custom.userContentS3EdgeUrl,
+      pageSize: perPage,
+      hasMore: posts.length >= perPage
     };
 
   }

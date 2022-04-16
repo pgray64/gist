@@ -22,5 +22,7 @@ module.exports.policies = {
   'legal/view-privacy': true,
   'deliver-contact-form-message': true,
   'view-post': true,
+  'view-user': true,
+  'user/list-user-posts': true
 
 };
