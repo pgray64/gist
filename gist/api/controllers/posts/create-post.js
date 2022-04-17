@@ -23,9 +23,6 @@ module.exports = {
     success: {
       description: 'Post created'
     },
-    success: {
-      description: 'Post created'
-    },
     uploadFailed : {
       statusCode: 500,
       description: 'File upload failed.'
@@ -53,14 +50,16 @@ module.exports = {
     if (this.req.me.emailStatus !== 'confirmed') {
       throw 'emailNotVerified';
     }
+    let slug = await sails.helpers.createPostSlug.with({title});
     let newFields = {
       user: this.req.me.id,
       title,
       textContent,
-      contentType: 'text'
+      contentType: 'text',
+      slug
     };
     let newPost = await Post.create(newFields).fetch();
-    return exits.success({postId: newPost.id})
+    return exits.success({postId: newPost.id, slug})
   }
 
 

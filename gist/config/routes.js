@@ -34,7 +34,7 @@ module.exports.routes = {
   'GET /account/profile':    { action: 'account/view-edit-profile' },
 
   'GET /posts/create-post': { action: 'posts/view-create-post' },
-  'GET /post/:id': { action: 'view-post' },
+  'GET /post/:id/:slug': { action: 'view-post' },
   'GET /:username': { action: 'view-user' },
 
 
@@ -69,6 +69,8 @@ module.exports.routes = {
   'POST /api/v1/posts/create-post': { action: 'posts/create-post' },
   'POST /api/v1/posts/create-image-post': { action: 'posts/create-image-post' },
   'GET /api/v1/user/list-user-posts': { action: 'user/list-user-posts' },
+  'GET /api/v1/posts/list-post-comments': { action: 'posts/list-post-comments' },
+  'POST /api/v1/posts/add-post-comment': { action: 'posts/add-post-comment' },
 
 
 };

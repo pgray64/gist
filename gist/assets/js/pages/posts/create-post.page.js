@@ -42,7 +42,7 @@ parasails.registerPage('create-post', {
   methods: {
     submittedForm: async function(result) {
       this.syncing = true;
-      window.location = '/post/' + result.postId;
+      window.location = '/post/' + result.postId + '/' + result.slug;
     },
     changeFileInput: function(files) {
       if (files.length !== 1 && !this.formData.imageFile) {

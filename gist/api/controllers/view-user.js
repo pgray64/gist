@@ -32,7 +32,7 @@ module.exports = {
     }
     const perPage = sails.config.custom.userListPostsPerPage;
     let posts = await Post.find({
-      select: ['title', 'textContent', 'imageContent', 'contentType'],
+      select: ['title', 'textContent', 'imageContent', 'contentType', 'slug'],
       where: {
         user: user.id,
       },

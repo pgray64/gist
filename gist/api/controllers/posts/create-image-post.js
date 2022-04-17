@@ -87,15 +87,16 @@ module.exports = {
       }
       return 'uploadFailed';
     });
-
+    let slug = await sails.helpers.createPostSlug.with({title});
     let newFields = {
       user: this.req.me.id,
       title,
       imageContent: result.fd,
-      contentType: 'image'
+      contentType: 'image',
+      slug
     };
     let newPost = await Post.create(newFields).fetch();
-    return exits.success({postId: newPost.id});
+    return exits.success({postId: newPost.id, slug});
 
   }
 

@@ -20,6 +20,9 @@ parasails.registerPage('user', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
+    getPostUrl: function(post) {
+      return '/post/' + post.id + '/' + post.slug;
+    },
     getImageUrl: function(img) {
       return this.imageBaseUrl + '/' + img;
     },

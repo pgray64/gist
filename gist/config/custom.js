@@ -115,6 +115,7 @@ module.exports.custom = {
   userPostAllowedFiletypes: ['image/png', 'image/jpeg', 'image/gif', 'image/bmp'],
   // Pagination
   userListPostsPerPage: 12,
+  userListCommentsPerPage: 12,
   // Username
   usernameMinLength: 5,
   usernameMaxLength: 50,

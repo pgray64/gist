@@ -20,11 +20,12 @@ module.exports = {
 
   fn: async function () {
     let id = parseInt(this.req.param('id'));
-    if (!id || id < 1) {
+    let slug = this.req.param('slug');
+    if (!id || id < 1 || !slug) {
       throw 'notFound';
     }
     let post = await Post.findOne({
-      where: {id},
+      where: {id, slug},
       select: ['title', 'textContent', 'imageContent', 'contentType', 'createdAt', 'user']
     }).populate('user');
     if (!post) {

@@ -41,7 +41,7 @@ module.exports = {
       sort: 'id desc',
       skip: page * perPage
     })
-    let hasMore = posts > perPage
+    let hasMore = posts.length > perPage
     return {
       posts: posts.slice(0, perPage),
       hasMore

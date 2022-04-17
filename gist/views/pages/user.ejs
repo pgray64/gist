@@ -15,18 +15,18 @@
             </div>
             <div v-else class="col-12 text-center text-sm-left">
                 <div>
-                    <div class="card d-inline-block mb-3 mr-3 align-top text-left" style="width: 15rem;" v-for="post in posts">
-                        <a :href="'/post/' + post.id" class="text-decoration-none">
-                            <div v-if="post.contentType ==='image'" class="card-img-top d-flex bg-light border-bottom align-items-center justify-content-center" style="overflow: hidden;height: 10rem">
+                    <div class="card shadow-sm post-card d-inline-block mb-2 mr-2 align-top text-left" style="width: 15rem;" v-for="post in posts">
+                        <a :href="getPostUrl(post)" class="text-decoration-none">
+                            <div v-if="post.contentType ==='image'" class="card-img-top d-flex border-bottom align-items-center justify-content-center" style="overflow: hidden;height: 10rem">
                                 <img  :src="getImageUrl(post.imageContent)" class="d-inline-block" style="width:auto;height:100%;" :title="post.title" :alt="post.title">
                             </div>
-                            <div v-else-if="post.contentType ==='text'" class="fade-overflow user-content text-dark p-3 bg-white border-bottom" style="height: 10rem" >
+                            <div v-else-if="post.contentType ==='text'" class="fade-overflow user-content text-dark p-3  border-bottom" style="height: 10rem" >
                                 {{post.textContent}}
                             </div>
                         </a>
                         <div class="card-body py-2 px-3" :class="{'border-top': post.contentType ==='text'}">
                             <div class="user-content" style="white-space: nowrap;">
-                                <a :href="'/post/' + post.id" :title="post.title">{{post.title}}</a>
+                                <a :href="getPostUrl(post)" :title="post.title">{{post.title}}</a>
                             </div>
                         </div>
                     </div>
