@@ -1,21 +1,20 @@
 <div id="user" v-cloak>
 
     <div class="container pt-1 pt-sm-3 pb-5">
-        <h5>{{user.displayUsername}}</h5>
-        <div class="row mt-5">
+        <h5 class="pl-2">{{user.displayUsername}}</h5>
+        <div class="row mt-4">
             <div v-if="posts.length < 1" class="col-12" >
                 <div class="text-center">
                     <div style="max-width: 650px;" class="d-inline-block">
                         <h2>No posts found</h2>
-                        <hr/>
                         <h5 class="px-3"><a class="text-info" :href="'/' + user.username">{{user.displayUsername}}</a> hasn't submitted anything.</h5>
                     </div>
 
                 </div>
             </div>
             <div v-else class="col-12 text-center text-sm-left">
-                <div>
-                    <div class="card shadow-sm post-card d-inline-block mb-2 mr-2 align-top text-left" style="width: 15rem;" v-for="post in posts">
+                <div class="align-top text-left d-inline-block post-card" v-for="post in posts">
+                    <div class="card shadow-sm mb-3 mx-2 ">
                         <a :href="getPostUrl(post)" class="text-decoration-none">
                             <div v-if="post.contentType ==='image'" class="card-img-top d-flex border-bottom align-items-center justify-content-center" style="overflow: hidden;height: 10rem">
                                 <img  :src="getImageUrl(post.imageContent)" class="d-inline-block" style="width:auto;height:100%;" :title="post.title" :alt="post.title">
@@ -25,14 +24,14 @@
                             </div>
                         </a>
                         <div class="card-body py-2 px-3" :class="{'border-top': post.contentType ==='text'}">
-                            <div class="user-content" style="white-space: nowrap;">
+                            <div class="user-content small" style="white-space: nowrap;">
                                 <a :href="getPostUrl(post)" :title="post.title">{{post.title}}</a>
                             </div>
                         </div>
                     </div>
-                    <div class="text-center mt-4">
-                        <button class="btn btn-info" @click="loadPosts()" v-if="hasMore">Load more</button>
-                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <button class="btn btn-info" @click="loadPosts()" v-if="hasMore">Load more</button>
                 </div>
             </div>
         </div>
