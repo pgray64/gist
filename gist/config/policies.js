@@ -23,7 +23,7 @@ module.exports.policies = {
   'deliver-contact-form-message': true,
   'view-post': true,
   'view-user': true,
-  'user/list-user-posts': true,
+  'posts/list-user-posts': true,
   'posts/list-post-comments': true
 
 };

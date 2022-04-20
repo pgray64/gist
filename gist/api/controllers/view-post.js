@@ -19,6 +19,7 @@ module.exports = {
 
 
   fn: async function () {
+    let path = require('path');
     let id = parseInt(this.req.param('id'));
     let slug = this.req.param('slug');
     if (!id || id < 1 || !slug) {
@@ -26,23 +27,54 @@ module.exports = {
     }
     let post = await Post.findOne({
       where: {id, slug},
-      select: ['title', 'textContent', 'imageContent', 'contentType', 'createdAt', 'user']
-    }).populate('user');
+      select: ['title', 'textContent', 'imageContent', 'contentType', 'createdAt', 'user', 'rebloggedPost']
+    }, {user: true});
     if (!post) {
       throw 'notFound';
     }
     let imageUrl;
-    let canReblog = false;
+
+    let isReblog = post.contentType === 'reblog';
+    let rawRebloggedPost;
+    if (isReblog) {
+      rawRebloggedPost = await Post.findOne({
+        where: {id: post.rebloggedPost},
+        select: ['title', 'textContent', 'imageContent', 'contentType', 'createdAt', 'user', 'slug']
+      }, {user: true});
+    }
     if (post.contentType === 'image') {
-      let path = require('path');
       imageUrl = path.join(sails.config.custom.userContentS3EdgeUrl, post.imageContent);
     }
-    if (post.contentType !== 'reblog' && this.req.me && this.req.me.id) {
-      let existingReblog = await Post.find({
-        select: [],
-        where: {rebloggedPost: id, user: this.req.me.id}
-      });
-      canReblog = existingReblog.length < 1;
+
+    let canReblog = true;
+    if (this.req.me && this.req.me.id) {
+      // Can't reblog your own post or a reblog of your own post
+      if (post.user.id === this.req.me.id || (post.rebloggedPost && post.rebloggedPost.user === this.req.me.id)) {
+        canReblog = false;
+      }
+      if (canReblog) {
+        // Can only reblog a post once, including reblogs of that post
+        let reblogIds = isReblog ? [id, post.rebloggedPost.id] : [id];
+        let existingReblogs = await Post.find({
+          select: [],
+          where: {rebloggedPost: reblogIds, user: this.req.me.id}
+        });
+        canReblog = existingReblogs.length < 1;
+      }
+    }
+    let rebloggedPost = null;
+    if (isReblog) {
+      rebloggedPost = {
+        id: rawRebloggedPost.id,
+        slug: rawRebloggedPost.slug,
+        title: rawRebloggedPost.title,
+        textContent: rawRebloggedPost.textContent,
+        imageUrl: path.join(sails.config.custom.userContentS3EdgeUrl, rawRebloggedPost.imageContent),
+        contentType: rawRebloggedPost.contentType,
+        createdAt: rawRebloggedPost.createdAt,
+        userId: rawRebloggedPost.user.id,
+        username: rawRebloggedPost.user.displayUsername,
+      }
     }
     return {
       id,
@@ -53,7 +85,8 @@ module.exports = {
       createdAt: post.createdAt,
       userId: post.user.id,
       username: post.user.displayUsername,
-      canReblog
+      canReblog,
+      rebloggedPost
     };
 
   }

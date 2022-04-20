@@ -41,6 +41,18 @@ parasails.registerPage('post', {
     getUserUrl: function(username) {
       return '/' + username;
     },
+    getOriginalUserUrl: function() {
+      return '/' + this.rebloggedPost.username;
+    },
+    getImageUrl: function() {
+      return this.rebloggedPost ? this.rebloggedPost.imageUrl : this.imageUrl;
+    },
+    getTextContent: function() {
+      return this.rebloggedPost ? this.rebloggedPost.textContent : this.textContent;
+    },
+    getOriginalUrl: function() {
+      return '/post/' + this.rebloggedPost.id + '/' + this.rebloggedPost.slug;
+    },
     cancelAddComment: function() {
       this.addingComment = false;
       this.newCommentContent = '';
@@ -82,6 +94,10 @@ parasails.registerPage('post', {
       element.scrollIntoView();
     },
     reblog: async function() {
+      if (!this.isLoggedIn) {
+        window.location = '/login';
+        return;
+      }
       this.submittingReblog = true;
       let result = await Cloud.createReblogPost(this.id);
       window.location = '/post/' + result.postId + '/' + result.slug;

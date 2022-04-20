@@ -17,15 +17,20 @@
             <div v-else class="col-12 text-center text-sm-left">
                 <div class="align-top text-left d-inline-block post-card" v-for="post in posts">
                     <div class="card shadow-sm mb-3 mx-2 ">
-                        <a :href="getPostUrl(post)" class="text-decoration-none">
-                            <div v-if="post.contentType ==='image'" class="card-img-top d-flex border-bottom align-items-center justify-content-center" style="overflow: hidden;height: 13rem">
-                                <img  :src="getImageUrl(post.imageContent)" class="d-inline-block" style="width:auto;height:100%;" :title="post.title" :alt="post.title">
+                        <div class="position-absolute" style="z-index:2" v-if="post.rebloggedPost">
+                            <div class="bg-white rounded-pill  m-1 border-light border shadow-sm">
+                                <span class="fa fa-retweet p-2 text-primary"></span>
                             </div>
-                            <div v-else-if="post.contentType ==='text'" class="fade-overflow user-content text-dark p-3  border-bottom" style="height: 13rem" >
-                                {{post.textContent}}
+                        </div>
+                        <a :href="getPostUrl(post)" class="text-decoration-none">
+                            <div v-if="post.contentType ==='image' || (post.rebloggedPost && post.rebloggedPost.contentType === 'image')" class="card-img-top d-flex align-items-center justify-content-center" style="overflow: hidden;height: 13rem">
+                                <img  :src="getImageUrl(post)" class="d-inline-block" style="width:auto;height:100%;" :title="post.title" :alt="post.title">
+                            </div>
+                            <div v-else-if="post.contentType ==='text' || (post.rebloggedPost && post.rebloggedPost.contentType === 'text')" class="fade-overflow user-content text-dark p-3  border-bottom" style="height: 13rem" >
+                                {{getTextContent(post)}}
                             </div>
                         </a>
-                        <div class="card-body py-2 px-3" :class="{'border-top': post.contentType ==='text'}">
+                        <div class="card-body py-2 px-3 border-top">
                             <div class="user-content small" style="white-space: nowrap;">
                                 <a :href="getPostUrl(post)" :title="post.title">{{post.title}}</a>
                             </div>

@@ -31,19 +31,9 @@ module.exports = {
     if (userId < 0 || page < 0) {
       return [];
     }
-    const perPage = sails.config.custom.userListPostsPerPage;
-    let posts = await Post.find({
-      select: ['title', 'textContent', 'imageContent', 'contentType', 'slug'],
-      where: {
-        user: userId,
-      },
-      limit: perPage + 1,
-      sort: 'id desc',
-      skip: page * perPage
-    })
-    let hasMore = posts.length > perPage
+    let {posts, hasMore} = await sails.helpers.listUserPosts.with({userId, page});
     return {
-      posts: posts.slice(0, perPage),
+      posts,
       hasMore
     };
   }

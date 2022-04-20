@@ -31,21 +31,14 @@ module.exports = {
       throw 'notFound';
     }
     const perPage = sails.config.custom.userListPostsPerPage;
-    let posts = await Post.find({
-      select: ['title', 'textContent', 'imageContent', 'contentType', 'slug'],
-      where: {
-        user: user.id,
-      },
-      limit: perPage,
-      sort: 'id desc'
-    })
+    let {posts, hasMore} = await sails.helpers.listUserPosts.with({userId: user.id, page: 0});
     // Respond with view.
     return {
       user,
       posts,
       imageBaseUrl: sails.config.custom.userContentS3EdgeUrl,
       pageSize: perPage,
-      hasMore: posts.length >= perPage
+      hasMore
     };
 
   }

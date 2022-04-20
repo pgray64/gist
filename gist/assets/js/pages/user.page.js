@@ -18,7 +18,7 @@ parasails.registerPage('user', {
   computed: {
     isLoggedIn: function() {
       return !!this.me && this.me.id
-    }
+    },
   },
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
@@ -27,8 +27,11 @@ parasails.registerPage('user', {
     getPostUrl: function(post) {
       return '/post/' + post.id + '/' + post.slug;
     },
-    getImageUrl: function(img) {
-      return this.imageBaseUrl + '/' + img;
+    getImageUrl: function(post) {
+      return this.imageBaseUrl + '/' + (post.rebloggedPost ? post.rebloggedPost.imageContent : post.imageContent);
+    },
+    getTextContent: function(post) {
+      return post.rebloggedPost ? post.rebloggedPost.textContent : post.textContent;
     },
     async loadPosts() {
       this.page++;
