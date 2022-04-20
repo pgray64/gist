@@ -15,7 +15,11 @@ parasails.registerPage('user', {
   mounted: async function() {
     //…
   },
-
+  computed: {
+    isLoggedIn: function() {
+      return !!this.me && this.me.id
+    }
+  },
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝

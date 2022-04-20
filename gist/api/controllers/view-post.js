@@ -32,9 +32,17 @@ module.exports = {
       throw 'notFound';
     }
     let imageUrl;
+    let canReblog = false;
     if (post.contentType === 'image') {
       let path = require('path');
       imageUrl = path.join(sails.config.custom.userContentS3EdgeUrl, post.imageContent);
+    }
+    if (post.contentType !== 'reblog' && this.req.me && this.req.me.id) {
+      let existingReblog = await Post.find({
+        select: [],
+        where: {rebloggedPost: id, user: this.req.me.id}
+      });
+      canReblog = existingReblog.length < 1;
     }
     return {
       id,
@@ -44,7 +52,8 @@ module.exports = {
       contentType: post.contentType,
       createdAt: post.createdAt,
       userId: post.user.id,
-      username: post.user.displayUsername
+      username: post.user.displayUsername,
+      canReblog
     };
 
   }

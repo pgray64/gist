@@ -1,4 +1,7 @@
 <div id="post" v-cloak>
+    <div class="container" v-if="isLoggedIn">
+        <account-notification-banner></account-notification-banner>
+    </div>
     <div class="container pt-1 pt-sm-3 pb-5">
         <h5><a :href="getUserUrl(username)">{{username}}</a></h5>
         <h4 class="user-content mt-4">
@@ -9,14 +12,14 @@
             <img :src="imageUrl" style="max-width:100%;max-height:600px" class="rounded"/>
         </div>
         <div class="mt-3" v-if="!addingComment">
-            <button class="btn btn-sm btn-info mb-1 mr-1"><span class="fa fa-share mr-1"></span>Reblog</button>
-            <button class="btn btn-sm btn-outline-primary mb-1" @click="showAddComment()"><span class="fa fa-comment-o mr-1"></span>Add a comment</button>
+            <ajax-button type="button" :syncing="submittingReblog" @click="reblog()" class="btn btn-sm btn-info mb-1 mr-1" v-if="!isOwnPost" :disabled="!canReblog"><span class="fa fa-share mr-1"></span>Reblog</ajax-button>
+            <button type="button" class="btn btn-sm btn-outline-primary mb-1" @click="showAddComment()"><span class="fa fa-comment-o mr-1"></span>Add a comment</button>
         </div>
         <div class="mt-3" v-if="addingComment">
             <textarea style="resize:none" rows="4" class="form-control" v-model="newCommentContent"
                       maxLength=500 type="text" :disabled="submittingComment"></textarea>
             <div class="text-right mt-2">
-                <button type=:button" class="btn btn-sm btn-outline-info mb-1" @click="cancelAddComment()"></span>Cancel</button>
+                <button type="button" class="btn btn-sm btn-outline-info mb-1" @click="cancelAddComment()"></span>Cancel</button>
                 <ajax-button type="button" :syncing="submittingComment" @click="submitComment()" class="btn btn-sm btn-dark mb-1">Submit comment</ajax-button>
             </div>
         </div>
@@ -36,7 +39,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <button class="btn btn-info" @click="loadComments()" v-if="hasMoreComments">Load more</button>
+                    <button type="button" class="btn btn-info" @click="loadComments()" v-if="hasMoreComments">Load more</button>
                 </div>
             </div>
         </div>

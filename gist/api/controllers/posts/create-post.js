@@ -59,7 +59,7 @@ module.exports = {
       slug
     };
     let newPost = await Post.create(newFields).fetch();
-    return exits.success({postId: newPost.id, slug})
+    return exits.success({postId: newPost.id, slug});
   }
 
 

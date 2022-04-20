@@ -71,6 +71,7 @@ module.exports.routes = {
   'GET /api/v1/user/list-user-posts': { action: 'user/list-user-posts' },
   'GET /api/v1/posts/list-post-comments': { action: 'posts/list-post-comments' },
   'POST /api/v1/posts/add-post-comment': { action: 'posts/add-post-comment' },
+  'POST /api/v1/create-reblog-post': { action: 'posts/create-reblog-post' },
 
 
 };

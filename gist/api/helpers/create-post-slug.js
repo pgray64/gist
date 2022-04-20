@@ -28,7 +28,8 @@ module.exports = {
     let slug = (title || '').replace(/[^0-9a-zA-Z]/g, ' ').trim();
     let parts = slug.split(' ');
     slug = parts.filter(c => c).join('-')
-    return slug.slice(0, 50);
+    slug = slug.slice(0, 50);
+    return slug.length > 0 ? slug : '0';
   }
 
 

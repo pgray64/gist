@@ -14,7 +14,8 @@ parasails.registerComponent('ajaxButton', {
   //  ╠═╝╠╦╝║ ║╠═╝╚═╗
   //  ╩  ╩╚═╚═╝╩  ╚═╝
   props: [
-    'syncing'
+    'syncing',
+    'type'
   ],
 
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
@@ -30,7 +31,7 @@ parasails.registerComponent('ajaxButton', {
   //  ╠═╣ ║ ║║║║
   //  ╩ ╩ ╩ ╩ ╩╩═╝
   template: `
-  <button @click="click()" type="submit" class="btn ajax-button" :class="[syncing ? 'syncing' : '']">
+  <button @click="click()" :type="type || 'submit'" class="btn ajax-button" :class="[syncing ? 'syncing' : '']">
     <span class="button-text" v-if="!syncing"><slot name="default">Submit</slot></span>
     <span class="button-loader clearfix" v-if="syncing">
       <slot name="syncing-state">

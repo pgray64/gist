@@ -9,7 +9,8 @@ parasails.registerPage('post', {
     newCommentContent: '',
     commentsLoading: true,
     commentsPage: 0,
-    hasMoreComments: false
+    hasMoreComments: false,
+    submittingReblog: false,
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -27,6 +28,9 @@ parasails.registerPage('post', {
   computed: {
     isLoggedIn: function() {
       return !!this.me && this.me.id
+    },
+    isOwnPost: function() {
+      return this.isLoggedIn && this.me.id === this.userId;
     }
   },
 
@@ -76,6 +80,11 @@ parasails.registerPage('post', {
       await Vue.nextTick();
       let element = document.getElementById(newCommentElemId);
       element.scrollIntoView();
+    },
+    reblog: async function() {
+      this.submittingReblog = true;
+      let result = await Cloud.createReblogPost(this.id);
+      window.location = '/post/' + result.postId + '/' + result.slug;
     }
   }
 });

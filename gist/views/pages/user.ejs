@@ -1,5 +1,7 @@
 <div id="user" v-cloak>
-
+    <div class="container" v-if="isLoggedIn">
+        <account-notification-banner></account-notification-banner>
+    </div>
     <div class="container pt-1 pt-sm-3 pb-5">
         <h5 class="pl-2">{{user.displayUsername}}</h5>
         <div class="row mt-4">
@@ -31,7 +33,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <button class="btn btn-info" @click="loadPosts()" v-if="hasMore">Load more</button>
+                    <button type="button" class="btn btn-info" @click="loadPosts()" v-if="hasMore">Load more</button>
                 </div>
             </div>
         </div>
