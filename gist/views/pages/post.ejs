@@ -4,7 +4,8 @@
     </div>
     <div class="container pt-1 pt-sm-3 pb-5">
         <h5><a :href="getUserUrl(username)">{{username}}</a></h5>
-        <div :class="[rebloggedPost ? 'p-3 border rounded': '']" class="mt-4">
+        <div v-if="rebloggedPost" class="text-info small text-uppercase font-weight-bold"><span class="mr-1 fa fa-retweet"></span>Reblogged</div>
+        <div :class="[rebloggedPost ? 'p-3 border rounded': '']" class="mt-2">
             <div class="user-content" v-if="rebloggedPost">
                 <h6><a :href="getOriginalUserUrl(username)" class="text-dark">{{rebloggedPost.username}}</a></h6>
                 <h4>
@@ -14,7 +15,8 @@
             <h4 v-else>
                 {{title}}
             </h4>
-            <div v-if="contentType === 'text' || (rebloggedPost && rebloggedPost.contentType === 'text')" class="border p-3 rounded user-content">{{getTextContent()}}</div>
+            <div v-if="contentType === 'text' || (rebloggedPost && rebloggedPost.contentType === 'text')"
+                 class="rounded user-content">{{getTextContent()}}</div>
             <div v-else-if="contentType === 'image' || (rebloggedPost && rebloggedPost.contentType === 'image')" class="mt-2">
                 <img :src="getImageUrl()" style="max-width:100%;max-height:600px" class="rounded"/>
             </div>
