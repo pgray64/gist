@@ -31,7 +31,7 @@ module.exports = {
       throw 'notFound';
     }
     const perPage = sails.config.custom.userListPostsPerPage;
-    let {posts, hasMore} = await sails.helpers.listUserPosts.with({userId: user.id, page: 0});
+    let {posts, hasMore} = await sails.helpers.listPosts.with({userId: user.id, page: 0, type: 'user'});
     // Respond with view.
     return {
       user,

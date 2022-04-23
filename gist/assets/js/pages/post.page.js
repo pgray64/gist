@@ -74,7 +74,8 @@ parasails.registerPage('post', {
         id: newComment.id,
         textContent: this.newCommentContent,
         username: this.me.username,
-        displayUsername: this.me.displayUsername
+        displayUsername: this.me.displayUsername,
+        createdAt: Date.now()
       });
       this.cancelAddComment();
     },
@@ -86,12 +87,6 @@ parasails.registerPage('post', {
       let newCommentElemId = 'comment_' + result.comments[0].id;
       this.commentList = this.commentList.concat(result.comments);
       this.commentsLoading = false;
-
-
-      // scroll to new results
-      await Vue.nextTick();
-      let element = document.getElementById(newCommentElemId);
-      element.scrollIntoView();
     },
     reblog: async function() {
       if (!this.isLoggedIn) {

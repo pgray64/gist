@@ -37,6 +37,8 @@ module.exports.routes = {
   'GET /post/:id/:slug': { action: 'view-post' },
   'GET /:username': { action: 'view-user' },
 
+  'GET /posts/trending': { action: 'posts/view-trending' },
+
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
@@ -72,6 +74,7 @@ module.exports.routes = {
   'GET /api/v1/posts/list-post-comments': { action: 'posts/list-post-comments' },
   'POST /api/v1/posts/add-post-comment': { action: 'posts/add-post-comment' },
   'POST /api/v1/create-reblog-post': { action: 'posts/create-reblog-post' },
+  'GET /api/v1/list-trending-posts': { action: 'posts/list-trending-posts' }
 
 
 };

@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'List user posts',
+  friendlyName: 'List posts',
 
 
   description: '',
@@ -10,12 +10,16 @@ module.exports = {
   inputs: {
     userId: {
       type: 'number',
-      required: true
     },
     page: {
       type: 'number',
       required: true,
       description: '0-indexed page number for results'
+    },
+    type: {
+      type: 'string',
+      isIn: ['user', 'trending'],
+      required: true
     }
   },
 
@@ -25,19 +29,29 @@ module.exports = {
     success: {
       description: 'All done.',
     },
+    badArguments: {
+      description: 'Specify a userId if for type=user'
+    }
 
   },
 
 
-  fn: async function ({userId, page}) {
+  fn: async function ({userId, page, type}) {
     const perPage = sails.config.custom.userListPostsPerPage;
+    let whereClause;
+    let sortClause;
+    if (type === 'user') {
+      whereClause = {user: userId};
+      sortClause = 'id desc';
+    } else {
+      whereClause = undefined;
+      sortClause = 'hotScore desc';
+    }
     let rawPosts = await Post.find({
-      select: ['title', 'textContent', 'imageContent', 'contentType', 'slug', 'rebloggedPost'],
-      where: {
-        user: userId,
-      },
+      select: ['title', 'textContent', 'imageContent', 'contentType', 'slug', 'rebloggedPost', 'hotScore'],
+      where: whereClause,
       limit: perPage + 1,
-      sort: 'id desc',
+      sort: sortClause,
       skip: page * perPage
     }, {rebloggedPost: true})
     let hasMore = rawPosts.length > perPage;

@@ -24,6 +24,8 @@ module.exports.policies = {
   'view-post': true,
   'view-user': true,
   'posts/list-user-posts': true,
-  'posts/list-post-comments': true
+  'posts/list-post-comments': true,
+  'posts/list-trending-posts': true,
+  'posts/view-trending': true
 
 };

@@ -37,6 +37,10 @@ module.exports = {
       required: true,
       maxLength: 50
     },
+    hotScore: {
+      type: 'number',
+      defaultsTo: -1
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

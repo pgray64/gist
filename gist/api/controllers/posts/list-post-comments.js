@@ -33,7 +33,7 @@ module.exports = {
     }
     const perPage = sails.config.custom.userListCommentsPerPage;
     let rawComments = await PostComment.find({
-      select: ['textContent', 'user'],
+      select: ['textContent', 'user', 'createdAt'],
       where: {
         post: postId
       },
@@ -47,7 +47,8 @@ module.exports = {
         id: c.id,
         textContent: c.textContent,
         username: c.user.username,
-        displayUsername: c.user.displayUsername
+        displayUsername: c.user.displayUsername,
+        createdAt: c.createdAt
       }
     });
     return {

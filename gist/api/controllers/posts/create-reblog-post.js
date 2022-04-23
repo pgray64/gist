@@ -34,7 +34,7 @@ module.exports = {
     }
     // Can't reblog your own post or a reblog of your own post
     let posts = await Post.find({
-      select: ['slug', 'title', 'contentType', 'rebloggedPost', 'user'],
+      select: ['slug', 'title', 'contentType', 'rebloggedPost', 'user',],
       where: {id: postId}
     }).populate('rebloggedPost');
     if (posts.length === 0) {
@@ -56,7 +56,15 @@ module.exports = {
       rebloggedPost: rebloggedPostId
     };
     let newPost = await Post.create(newFields).fetch();
-    return exits.success({postId: newPost.id, slug, rebloggedPost: post.id});
+
+    // Add to reblogged post's hot score.
+    let rebloggedPost = await Post.findOne({
+      select: ['hotScore'],
+      where: {id: rebloggedPostId}
+    });
+    let newHotScore = await sails.helpers.getHotScore.with({currentScore: rebloggedPost.hotScore});
+    await Post.update({id: rebloggedPostId}).set({hotScore: newHotScore});
+    return exits.success({postId: newPost.id, slug});
   }
 
 

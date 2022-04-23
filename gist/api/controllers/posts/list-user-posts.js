@@ -31,7 +31,7 @@ module.exports = {
     if (userId < 0 || page < 0) {
       return [];
     }
-    let {posts, hasMore} = await sails.helpers.listUserPosts.with({userId, page});
+    let {posts, hasMore} = await sails.helpers.listPosts.with({userId, page, type: 'user'});
     return {
       posts,
       hasMore
