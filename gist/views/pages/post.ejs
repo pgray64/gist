@@ -56,14 +56,14 @@
                     <hr/>
                 </div>
                 <div class="text-center mt-4">
-                    <button type="button" class="btn btn-info" @click="loadComments()" v-if="hasMoreComments">Load more</button>
+                    <button type="button" :disabled="commentsLoading" class="btn btn-info" @click="loadComments()" v-if="hasMoreComments">Load more</button>
                 </div>
                 <div v-if="commentList.length < 1" class="text-dark">
                     This post has no comments.
                 </div>
             </div>
             <div v-if="commentsLoading" class="text-center">
-                <div class="spinner-border text-primary" role="status">
+                <div class="spinner-border text-info" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>

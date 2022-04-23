@@ -5,7 +5,7 @@
     <div class="container pt-1 pt-sm-3 pb-5">
         <h5 class="pl-2">{{user.displayUsername}}</h5>
         <div class="mt-4">
-            <post-list :posts="posts" :has-more="hasMore" :image-base-url="imageBaseUrl" @load-more="loadPosts"></post-list>
+            <post-list :posts="posts" :has-more="hasMore" :is-loading="loading" :image-base-url="imageBaseUrl" @load-more="loadPosts"></post-list>
             <template slot="no-posts-message">
                 <div style="max-width: 650px;" class="d-inline-block">
                     <h2>No posts found</h2>

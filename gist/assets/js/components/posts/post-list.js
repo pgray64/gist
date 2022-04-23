@@ -15,7 +15,8 @@ parasails.registerComponent('postList', {
   props: [
     'posts',
     'hasMore',
-    'imageBaseUrl'
+    'imageBaseUrl',
+    'isLoading'
   ],
 
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
@@ -59,8 +60,13 @@ parasails.registerComponent('postList', {
                   </div>
               </div>
           </div>
+          <div v-if="isLoading" class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
           <div class="text-center mt-4">
-              <button type="button" class="btn btn-info" @click="loadMore()" v-if="hasMore">Load more</button>
+              <button type="button" :disabled="isLoading" class="btn btn-info" @click="loadMore()" v-if="hasMore">Load more</button>
           </div>
       </div>
 </div>

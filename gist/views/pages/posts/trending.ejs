@@ -2,17 +2,12 @@
     <div class="container pt-1 pt-sm-3 pb-5">
         <h3>Trending</h3>
         <div class="mt-4">
-            <post-list :posts="posts" :has-more="hasMore" :image-base-url="imageBaseUrl" @load-more="loadPosts"></post-list>
+            <post-list :posts="posts" :has-more="hasMore" :is-loading="loading" :image-base-url="imageBaseUrl" @load-more="loadPosts"></post-list>
             <template slot="no-posts-message">
                 <div style="max-width: 650px;" class="d-inline-block">
                     <h2>No posts found</h2>
                 </div>
             </template>
-        </div>
-        <div v-if="loading" class="text-center">
-            <div class="spinner-border text-primary" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
         </div>
     </div>
 </div>
