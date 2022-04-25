@@ -18,7 +18,7 @@ module.exports = {
     },
     type: {
       type: 'string',
-      isIn: ['user', 'trending'],
+      isIn: ['user', 'trending', 'followedByUser'],
       required: true
     }
   },
@@ -30,7 +30,7 @@ module.exports = {
       description: 'All done.',
     },
     badArguments: {
-      description: 'Specify a userId if for type=user'
+      description: 'Specify a userId if for type=user or type=followedByUser'
     }
 
   },
@@ -38,22 +38,41 @@ module.exports = {
 
   fn: async function ({userId, page, type}) {
     const perPage = sails.config.custom.userListPostsPerPage;
+
     let whereClause;
     let sortClause;
-    if (type === 'user') {
+    let limitClause = perPage + 1;
+    let offsetClause = page * perPage;
+    let selectClause =  ['title', 'textContent', 'imageContent', 'contentType', 'slug', 'rebloggedPost', 'hotScore'];
+    if (type === 'user' || type === 'followedByUser') {
+      if (!userId) {
+        throw 'badArguments';
+      }
       whereClause = {user: userId};
       sortClause = 'id desc';
-    } else {
+    } else if (type === 'trending') {
       whereClause = undefined;
       sortClause = 'hotScore desc';
     }
-    let rawPosts = await Post.find({
-      select: ['title', 'textContent', 'imageContent', 'contentType', 'slug', 'rebloggedPost', 'hotScore'],
-      where: whereClause,
-      limit: perPage + 1,
-      sort: sortClause,
-      skip: page * perPage
-    }, {rebloggedPost: true})
+    let rawPosts;
+    if (type === 'followedByUser') {
+      let result =  await sails.sendNativeQuery('select p.id from user_followed__user_followed_user ufu inner join post p on p.user = ufu.user_followed_user where ufu.user_followed=$1 order by p.id desc limit $2 offset $3',
+        [userId, limitClause, offsetClause]);
+      let postIds = result.rows.map(r => r.id);
+      rawPosts = await Post.find({where: { id: postIds }, select: selectClause, limit: limitClause,
+        sort: sortClause,
+        skip: offsetClause}, {rebloggedPost: true});
+
+    } else {
+      rawPosts = await Post.find({
+        select: selectClause,
+        where: whereClause,
+        limit: limitClause,
+        sort: sortClause,
+        skip: offsetClause
+      }, {rebloggedPost: true})
+    }
+
     let hasMore = rawPosts.length > perPage;
     rawPosts = rawPosts.slice(0, perPage);
     let posts = rawPosts.map(function(p) {

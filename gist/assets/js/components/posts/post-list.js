@@ -32,10 +32,8 @@ parasails.registerComponent('postList', {
   //  ╩ ╩ ╩ ╩ ╩╩═╝
   template: `
   <div class="row">
-      <div v-if="posts.length < 1" class="col-12" >
-          <div class="text-center">
-              <slot name="no-posts-message"></slot>
-          </div>
+      <div v-if="!isLoading && posts.length === 0" class="col-12 text-center">
+        <slot name="no-posts-message"></slot>
       </div>
       <div v-else class="col-12 text-center text-sm-left">
           <div class="align-top text-left d-inline-block post-card" v-for="post in posts">
@@ -61,10 +59,10 @@ parasails.registerComponent('postList', {
               </div>
           </div>
           <div v-if="isLoading" class="text-center">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-            </div>
+              <div class="spinner-border text-primary" role="status">
+                  <span class="sr-only">Loading...</span>
+              </div>
+          </div>
           <div class="text-center mt-4">
               <button type="button" :disabled="isLoading" class="btn btn-info" @click="loadMore()" v-if="hasMore">Load more</button>
           </div>

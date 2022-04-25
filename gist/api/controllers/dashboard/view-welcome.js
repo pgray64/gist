@@ -19,7 +19,9 @@ module.exports = {
 
   fn: async function () {
 
-    return {};
+    return {
+      imageBaseUrl: sails.config.custom.userContentS3EdgeUrl,
+    };
 
   }
 

@@ -7,3 +7,7 @@ alter table post add constraint FK_postcomment_user foreign key ("user") referen
 alter table "postcomment" add constraint FK_postcomment_post foreign key (post) references "post"(id);
 -- 4/23/22 Index for trending
 create index IX_post_hotScore on "post"("hotScore" DESC);
+-- 4/24/22 Unique index and FKs for following other users
+create unique index UX_user_followed__user_followed_user_user_followed_user_followed_user on "user_followed__user_followed_user" ("user_followed", user_followed_user);
+alter table "user_followed__user_followed_user" add constraint FK_user_followed__user_followed foreign key("user_followed") references "user"(id);
+alter table "user_followed__user_followed_user" add constraint FK_user_followed__user_followed_user_user_followed_user foreign key("user_followed_user") references "user"(id);

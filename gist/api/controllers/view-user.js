@@ -32,13 +32,26 @@ module.exports = {
     }
     const perPage = sails.config.custom.userListPostsPerPage;
     let {posts, hasMore} = await sails.helpers.listPosts.with({userId: user.id, page: 0, type: 'user'});
+
+    // If logged in, see if we are following this user
+    let isFollowing = false;
+    if (this.req.me && this.req.me.id) {
+      let me = await User.findOne({
+        where: {id: this.req.me.id},
+        select: []
+      }).populate('followed', {
+        where: {id: user.id}
+      });
+      isFollowing = me.followed.length > 0;
+    }
     // Respond with view.
     return {
       user,
       posts,
       imageBaseUrl: sails.config.custom.userContentS3EdgeUrl,
       pageSize: perPage,
-      hasMore
+      hasMore,
+      isFollowing
     };
 
   }

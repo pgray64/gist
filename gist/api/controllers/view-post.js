@@ -54,12 +54,12 @@ module.exports = {
       }
       if (canReblog) {
         // Can only reblog a post once, including reblogs of that post
-        let reblogIds = isReblog ? [id, post.rebloggedPost.id] : [id];
+        let reblogIds = isReblog ? post.rebloggedPost.id : id;
         let existingReblogs = await Post.find({
           select: [],
           where: {rebloggedPost: reblogIds, user: this.req.me.id}
         });
-        canReblog = existingReblogs.length < 1;
+        canReblog = existingReblogs.length === 0;
       }
     }
     let rebloggedPost = null;

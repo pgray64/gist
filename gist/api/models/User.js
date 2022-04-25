@@ -167,7 +167,7 @@ without necessarily having a billing card.`
       required: true,
       maxLength: 30,
       description: 'Displayed version of username, without lowercase applied'
-    }
+    },
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
@@ -176,7 +176,13 @@ without necessarily having a billing card.`
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-    // n/a
+    followed: {
+      collection: 'user',
+    },
+    posts: {
+      collection: 'post',
+      via: 'user'
+    }
 
   },
 

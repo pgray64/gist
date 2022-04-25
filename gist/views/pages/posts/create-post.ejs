@@ -1,12 +1,6 @@
 <div id="create-post" v-cloak>
     <div class="container">
         <account-notification-banner></account-notification-banner>
-        <div class="alert alert-warning alert-dismissible" v-if="!uploadEnabled">
-            You need to verify your email address in order to create a post.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
     </div>
     <div class="container pt-1 pt-sm-3 pb-5">
         <h1>Create a post</h1>
@@ -14,6 +8,12 @@
         <ajax-form :action="isImagePost ? 'createImagePost' : 'createPost'" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm">
             <div class="row">
                 <div class="col-sm-6">
+                    <div class="alert alert-warning alert-dismissible" v-if="!uploadEnabled">
+                        You need to verify your email address in order to create a post.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <div class="form-group">
                         <label class="mr-2" for="postTypeBtns">Post type</label>
                         <div class="btn-group btn-group-toggle" id="postTypeBtns" >

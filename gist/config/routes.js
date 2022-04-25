@@ -74,7 +74,9 @@ module.exports.routes = {
   'GET /api/v1/posts/list-post-comments': { action: 'posts/list-post-comments' },
   'POST /api/v1/posts/add-post-comment': { action: 'posts/add-post-comment' },
   'POST /api/v1/create-reblog-post': { action: 'posts/create-reblog-post' },
-  'GET /api/v1/list-trending-posts': { action: 'posts/list-trending-posts' }
+  'GET /api/v1/list-trending-posts': { action: 'posts/list-trending-posts' },
+  'PATCH /api/v1/users/update-follow-user': { action: 'users/update-follow-user' },
+  'POST /api/v1/posts/list-followed-posts': { action: 'posts/list-followed-posts' },
 
 
 };

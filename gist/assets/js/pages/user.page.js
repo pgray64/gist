@@ -4,7 +4,8 @@ parasails.registerPage('user', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     page: 0,
-    loading: false
+    loading: false,
+    loadingFollow: false,
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -20,6 +21,9 @@ parasails.registerPage('user', {
     isLoggedIn: function() {
       return !!this.me && this.me.id
     },
+    isSelf: function() {
+      return this.me && this.me.id === this.user.id;
+    }
   },
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
@@ -32,6 +36,12 @@ parasails.registerPage('user', {
       this.hasMore = result.hasMore;
       this.posts = this.posts.concat(result.posts);
       this.loading = false;
+    },
+    async setFollowUser(newVal) {
+      this.loadingFollow = true;
+      await Cloud.updateFollowUser(this.user.id, newVal);
+      this.isFollowing = newVal;
+      this.loadingFollow = false;
     }
   }
 });
