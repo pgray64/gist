@@ -24,6 +24,10 @@ module.exports = {
       statusCode: 404,
       description: 'Not found'
     },
+    emailNotVerified: {
+      statusCode: 403,
+      description: 'Email is not verified'
+    }
   },
 
 
@@ -31,6 +35,9 @@ module.exports = {
 
     if (postId < 0) {
       throw 'badRequest';
+    }
+    if (this.req.me.emailStatus !== 'confirmed') {
+      throw 'emailNotVerified';
     }
     // Can't reblog your own post or a reblog of your own post
     let posts = await Post.find({

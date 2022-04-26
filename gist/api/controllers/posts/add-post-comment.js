@@ -27,11 +27,20 @@ module.exports = {
       statusCode: 400,
       description: 'Bad request'
     },
+    emailNotVerified: {
+      statusCode: 403,
+      description: 'Email is not verified'
+    }
   },
 
 
   fn: async function ({postId, textContent}, exits) {
-
+    if (postId < 0) {
+      throw 'badRequest';
+    }
+    if (this.req.me.emailStatus !== 'confirmed') {
+      throw 'emailNotVerified';
+    }
     let newFields = {
       user: this.req.me.id,
       post: postId,

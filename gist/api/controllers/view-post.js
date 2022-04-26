@@ -46,10 +46,13 @@ module.exports = {
       imageUrl = path.join(sails.config.custom.userContentS3EdgeUrl, post.imageContent);
     }
 
-    let canReblog = true;
+    let canReblog = true; // Not logged-in user can click reblog, but will be redirected to login
+    let canComment = (!this.req.me || !this.req.me.id) || this.req.me.emailStatus === 'confirmed'; // same for comments
+
     if (this.req.me && this.req.me.id) {
       // Can't reblog your own post or a reblog of your own post
-      if (post.user.id === this.req.me.id || (post.rebloggedPost && post.rebloggedPost.user === this.req.me.id)) {
+      if (post.user.id === this.req.me.id || (post.rebloggedPost && post.rebloggedPost.user === this.req.me.id) ||
+        this.req.me.emailStatus !== 'confirmed') {
         canReblog = false;
       }
       if (canReblog) {
@@ -86,7 +89,8 @@ module.exports = {
       userId: post.user.id,
       username: post.user.displayUsername,
       canReblog,
-      rebloggedPost
+      rebloggedPost,
+      canComment
     };
 
   }
