@@ -26,7 +26,7 @@ module.exports = {
       throw 'notFound';
     }
     let post = await Post.findOne({
-      where: {id, slug},
+      where: {id, slug, deletedAt: null},
       select: ['title', 'textContent', 'imageContent', 'contentType', 'createdAt', 'user', 'rebloggedPost']
     }, {user: true});
     if (!post) {

@@ -77,6 +77,8 @@ module.exports.routes = {
   'GET /api/v1/list-trending-posts': { action: 'posts/list-trending-posts' },
   'PATCH /api/v1/users/update-follow-user': { action: 'users/update-follow-user' },
   'POST /api/v1/posts/list-followed-posts': { action: 'posts/list-followed-posts' },
+  'DELETE /api/v1/posts/delete-post': { action: 'posts/delete-post' },
+  'DELETE /api/v1/posts/delete-post-comment': { action: 'posts/delete-post-comment' },
 
 
 };

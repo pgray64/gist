@@ -45,6 +45,7 @@ module.exports = {
     let comments = rawComments.slice(0, perPage).map(function(c) {
       return {
         id: c.id,
+        user: c.user.id,
         textContent: c.textContent,
         username: c.user.username,
         displayUsername: c.user.displayUsername,

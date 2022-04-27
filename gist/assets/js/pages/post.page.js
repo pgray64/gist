@@ -11,6 +11,8 @@ parasails.registerPage('post', {
     commentsPage: 0,
     hasMoreComments: false,
     submittingReblog: false,
+    deleteConfirming: false,
+    deleteSyncing: false,
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -31,7 +33,7 @@ parasails.registerPage('post', {
     },
     isOwnPost: function() {
       return this.isLoggedIn && this.me.id === this.userId;
-    }
+    },
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -71,11 +73,12 @@ parasails.registerPage('post', {
       let newComment = await Cloud.addPostComment(this.id, this.newCommentContent);
       this.submittingComment = false;
       this.commentList.unshift({
-        id: newComment.id,
+        id: newComment.commentId,
         textContent: this.newCommentContent,
         username: this.me.username,
         displayUsername: this.me.displayUsername,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        user: this.me.id
       });
       this.cancelAddComment();
     },
@@ -96,6 +99,41 @@ parasails.registerPage('post', {
       this.submittingReblog = true;
       let result = await Cloud.createReblogPost(this.id);
       window.location = '/post/' + result.postId + '/' + result.slug;
+    },
+    openDeleteConfirmation() {
+      this.deleteConfirming = true;
+    },
+    cancelDelete() {
+      this.deleteConfirming = false;
+    },
+    async performDelete() {
+      this.deleteSyncing = true;
+      await Cloud.deletePost(this.id);
+      window.location = this.getUserUrl(this.me.username);
+    },
+    openCommentDeleteConfirmation(comment) {
+      let commentIndex = this.commentList.findIndex(function(c) { return c.id === comment.id; } );
+      comment.deleteConfirming = true;
+      Vue.set(this.commentList, commentIndex, comment); // Vue detection of changes to elements inside array sucks
+    },
+    cancelCommentDelete(comment) {
+      let commentIndex = this.commentList.findIndex(function(c) { return c.id === comment.id; } );
+      comment.deleteConfirming = false;
+      Vue.set(this.commentList, commentIndex, comment);
+    },
+    isOwnComment(comment) {
+      return this.isLoggedIn && this.me.id === comment.user;
+    },
+    async performCommentDelete(comment) {
+      comment.deleteSyncing = true;
+      await Cloud.deletePostComment(comment.id);
+      let commentIndex = this.commentList.findIndex(function(c) { return c.id === comment.id; } );
+      comment.deleteSyncing = true;
+      Vue.set(this.commentList, commentIndex, comment);
+
+      if (commentIndex >= 0) {
+        this.commentList.splice(commentIndex, 1);
+      }
     }
   }
 });

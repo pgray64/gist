@@ -4,14 +4,21 @@
     </div>
     <div class="container pt-1 pt-sm-3 pb-5">
         <h6>
-            <a :href="getUserUrl(username)">{{username}}</a>
-            <span class="text-dark font-italic small"><js-timestamp :at="createdAt"></js-timestamp></span>
+            <a :href="getUserUrl(username)" class="mr-1">{{username}}</a>
+            <span class="text-dark font-italic small mr-3"><js-timestamp :at="createdAt"></js-timestamp></span>
+            <span class="float-sm-right">
+                <button type="button" @click="openDeleteConfirmation" class="btn btn-sm btn-outline-danger " v-if="isOwnPost && !deleteConfirming"><span class="fa fa-trash-o mr-1"></span>Delete post</button>
+                <span  v-if="deleteConfirming">
+                    <button type="button" class="btn btn-sm btn-secondary mr-1" @click="cancelDelete">Cancel</button>
+                    <ajax-button type="button" class="btn btn-sm btn-danger mr-1" @click="performDelete" :syncing="deleteSyncing">Confirm deletion</ajax-button>
+                </span>
+            </span>
         </h6>
         <div v-if="rebloggedPost" class="text-info small text-uppercase font-weight-bold"><span class="mr-1 fa fa-retweet"></span>Reblogged</div>
         <div :class="[rebloggedPost ? 'mt-2 px-3 pt-3 border-left ': '']" class="mt-2">
             <div class="user-content" v-if="rebloggedPost">
                 <h6>
-                    <a :href="getOriginalUserUrl(username)">{{rebloggedPost.username}}</a>
+                    <a :href="getOriginalUserUrl(username)" class="mr-1">{{rebloggedPost.username}}</a>
                     <span class="text-dark font-italic small"><js-timestamp :at="rebloggedPost.createdAt"></js-timestamp></span>
                 </h6>
                 <h4>
@@ -52,6 +59,13 @@
                     <div>
                         <a :href="'/' + comment.username">{{comment.displayUsername}}</a>
                         <span class="text-dark font-italic small"><js-timestamp :at="comment.createdAt" format="timeago"></js-timestamp></span>
+                        <span class="float-right">
+                            <button type="button"  @click="openCommentDeleteConfirmation(comment)" class="btn btn-link text-danger" v-if="isOwnComment(comment) && !comment.deleteConfirming"><span class="fa fa-trash-o"></span></button>
+                            <span v-if="comment.deleteConfirming">
+                                <button type="button" class="btn btn-sm btn-secondary mr-1" @click="cancelCommentDelete(comment)">Cancel</button>
+                                <ajax-button type="button" class="btn btn-sm btn-danger mr-1" @click="performCommentDelete(comment)" :syncing="comment.deleteSyncing">Confirm deletion</ajax-button>
+                            </span>
+                        </span>
                     </div>
                     <hr/>
                 </div>

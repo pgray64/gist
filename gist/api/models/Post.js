@@ -41,6 +41,10 @@ module.exports = {
       type: 'number',
       defaultsTo: -1
     },
+    deletedAt: {
+      type: 'number',
+      allowNull:  true,
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
