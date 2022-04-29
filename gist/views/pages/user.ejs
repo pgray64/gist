@@ -5,7 +5,11 @@
     <div class="container pt-1 pt-sm-3 pb-5">
         <h5 class="pl-2 d-flex align-items-center">
             <span class="mr-2">{{user.displayUsername}}</span>
-            <ajax-button :syncing="loadingFollow" v-if="!isSelf" type="button" class="btn btn-sm" :class="[isFollowing ? 'btn-info' : 'btn-outline-info']"
+                <a v-if="isSelf" class="mx-2 btn btn-outline-info mr-1" href="/posts/create-post">
+                    <span class="fa fa-plus mr-1"></span>
+                    <span>New post</span>
+                </a>
+            <ajax-button :syncing="loadingFollow" v-else type="button" class="btn btn-sm" :class="[isFollowing ? 'btn-info' : 'btn-outline-info']"
             @click="setFollowUser(!isFollowing)">
                 <span v-if="isFollowing">
                    <span class="fa fa-check-circle mr-1"></span> Following

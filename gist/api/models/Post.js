@@ -20,7 +20,7 @@ module.exports = {
     },
     textContent: {
       type: 'string',
-      maxLength: 2000,
+      maxLength: 50000,
       description: 'Text content if this is a text post'
     },
     imageContent: {

@@ -29,10 +29,15 @@
                 {{title}}
             </h4>
             <div v-if="contentType === 'text' || (rebloggedPost && rebloggedPost.contentType === 'text')"
-                 class="rounded user-content p-3 border trix-content">
-                <div v-html="getTextContent()">
+                 class="rounded border" ref="textContentHolder">
+                <div class="user-content p-3" :class="[isLongTextPost && !isTextPostExpanded ? 'fade-overflow collapsed-text-post-content': '']">
+                    <div class="trix-content" v-html="getTextContent()"></div>
                 </div>
+                <div v-if="isLongTextPost" class="text-center my-2">
+                    <button type="button" class="btn btn-light btn-sm" v-if="!isTextPostExpanded" @click="setExpandedTextPost(true)"><span class="fa fa-angle-down mr-1"></span>Expand</button>
+                    <button type="button" class="btn btn-light btn-sm" v-if="isTextPostExpanded" @click="setExpandedTextPost(false)"><span class="fa fa-angle-up mr-1"></span>Collapse</button>
                 </div>
+            </div>
             <div v-else-if="contentType === 'image' || (rebloggedPost && rebloggedPost.contentType === 'image')" class="mt-2">
                 <img :src="getImageUrl()" style="max-width:100%;max-height:600px" class="rounded"/>
             </div>

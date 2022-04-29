@@ -52,12 +52,8 @@
                     </div>
                     <div class="form-group" v-else>
                         <label for="textContent">Post content</label>
-                        <!--<textarea style="resize:none" rows="8" class="form-control" id="textContent" name="textContent"
-                                  maxLength=2000 type="text" :disabled="syncing || !uploadEnabled"
-                                  :class="[formErrors.textContent ? 'is-invalid' : '']" v-model.trim="formData.textContent" placeholder="Post content" autocomplete="off">
-                        </textarea>-->
-                        <vue-trix v-model="formData.textContent" placeholder="Post content" style="height:600px"></vue-trix>
-                        <div class="invalid-feedback" v-if="formErrors.title">Please enter the content for your post.</div>
+                        <vue-trix v-model="formData.textContent" placeholder="Post content" @trix-file-accept="preventImages(event)"></vue-trix>
+                        <div class="invalid-feedback" v-if="formErrors.textContent">Please enter the content for your post.</div>
                     </div>
                 </div>
             </div>

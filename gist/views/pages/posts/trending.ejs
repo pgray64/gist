@@ -1,6 +1,6 @@
 <div id="trending" v-cloak>
     <div class="container pt-1 pt-sm-3 pb-5">
-        <h3>Trending</h3>
+        <h3 class="mx-2">Trending</h3>
         <div class="mt-4">
             <post-list :posts="posts" :has-more="hasMore" :is-loading="loading" :image-base-url="imageBaseUrl" @load-more="loadPosts">
                 <template #no-posts-message class="text-center">

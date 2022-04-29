@@ -26,9 +26,7 @@ parasails.registerPage('create-post', {
   beforeMount: function() {
     //…
   },
-  mounted: async function() {
-    //…
-  },
+  mounted: async function() {},
   computed: {
     uploadEnabled: function() {
       return this.me.emailStatus === 'confirmed';
@@ -79,6 +77,10 @@ parasails.registerPage('create-post', {
     },
     selectedFileTooLarge: function() {
       return this.formData.imageFile && this.formData.imageFile.size > this.maxFileSize;
+    },
+    preventImages(event) {
+      console.log('attached')
+      event.preventDefault();
     }
   }
 });

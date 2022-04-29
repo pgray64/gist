@@ -3,10 +3,10 @@
         <account-notification-banner></account-notification-banner>
     </div>
   <div class="container pt-1 pt-sm-3 pb-5">
-      <div class="buttons mx-2">
-          <a class="btn btn-info mr-2" href="/posts/create-post">Create a post</a>
-          <a class="btn btn-outline-info" :href="getUserUrl()">My content</a>
-      </div>
+      <h3 class="d-sm-flex align-items-center">
+          <span class="mx-2">For you</span>
+          <a class="mx-2 btn btn-outline-info" :href="getUserUrl()">My content</a>
+      </h3>
       <div class="mt-4">
           <post-list :posts="posts" :has-more="hasMore" :is-loading="loading" :image-base-url="imageBaseUrl" @load-more="loadPosts">
               <template #no-posts-message class="text-center">

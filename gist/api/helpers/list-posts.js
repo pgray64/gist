@@ -56,7 +56,7 @@ module.exports = {
     }
     let rawPosts;
     if (type === 'followedByUser') {
-      let result =  await sails.sendNativeQuery('select p.id from user_followed__user_followed_user ufu inner join post p on p.user = ufu.user_followed_user where ufu.user_followed=$1 and p."deletedAt" is null order by p.id desc limit $2 offset $3',
+      let result =  await sails.sendNativeQuery('select p.id from user_followed__user_followed_user ufu inner join post p on p.user = ufu.user_followed_user where ufu.user_followed=$1 and p."deletedAt" is null order by p."hotScore" desc limit $2 offset $3',
         [userId, limitClause, offsetClause]);
       let postIds = result.rows.map(r => r.id);
       rawPosts = await Post.find({where: { id: postIds }, select: selectClause, limit: limitClause,

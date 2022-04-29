@@ -13,6 +13,9 @@ parasails.registerPage('post', {
     submittingReblog: false,
     deleteConfirming: false,
     deleteSyncing: false,
+    isLongTextPost: false,
+    maxCollapsedTextPostHeight: 250,
+    isTextPostExpanded: false
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -26,6 +29,7 @@ parasails.registerPage('post', {
     this.hasMoreComments = result.hasMore;
     this.commentList = result.comments;
     this.commentsLoading = false;
+    this.isLongTextPost = this.contentType === 'text' && this.$refs.textContentHolder.clientHeight > this.maxCollapsedTextPostHeight;
   },
   computed: {
     isLoggedIn: function() {
@@ -87,7 +91,6 @@ parasails.registerPage('post', {
       this.commentsPage++;
       let result = await Cloud.listPostComments(this.id, this.commentsPage);
       this.hasMoreComments = result.hasMore;
-      let newCommentElemId = 'comment_' + result.comments[0].id;
       this.commentList = this.commentList.concat(result.comments);
       this.commentsLoading = false;
     },
@@ -134,6 +137,9 @@ parasails.registerPage('post', {
       if (commentIndex >= 0) {
         this.commentList.splice(commentIndex, 1);
       }
+    },
+    setExpandedTextPost(val) {
+      this.isTextPostExpanded = val;
     }
   }
 });
