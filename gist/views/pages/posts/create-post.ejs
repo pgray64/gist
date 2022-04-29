@@ -30,6 +30,10 @@
                         <input class="form-control" id="title" maxlength="50" name="title" type="text" :disabled="syncing || !uploadEnabled" :class="[formErrors.title ? 'is-invalid' : '']" v-model.trim="formData.title" placeholder="Post title" autocomplete="off">
                         <div class="invalid-feedback" v-if="formErrors.title">Please enter a title.</div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
                     <div class="form-group" v-if="isImagePost">
                         <label for="uploadBtn" class="mr-2">Post content</label>
                         <div>
@@ -48,10 +52,11 @@
                     </div>
                     <div class="form-group" v-else>
                         <label for="textContent">Post content</label>
-                        <textarea style="resize:none" rows="8" class="form-control" id="textContent" name="textContent"
+                        <!--<textarea style="resize:none" rows="8" class="form-control" id="textContent" name="textContent"
                                   maxLength=2000 type="text" :disabled="syncing || !uploadEnabled"
                                   :class="[formErrors.textContent ? 'is-invalid' : '']" v-model.trim="formData.textContent" placeholder="Post content" autocomplete="off">
-                        </textarea>
+                        </textarea>-->
+                        <vue-trix v-model="formData.textContent" placeholder="Post content" style="height:600px"></vue-trix>
                         <div class="invalid-feedback" v-if="formErrors.title">Please enter the content for your post.</div>
                     </div>
                 </div>

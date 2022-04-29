@@ -60,8 +60,8 @@ module.exports = {
         [userId, limitClause, offsetClause]);
       let postIds = result.rows.map(r => r.id);
       rawPosts = await Post.find({where: { id: postIds }, select: selectClause, limit: limitClause,
-        sort: sortClause,
-        skip: offsetClause}, {rebloggedPost: true});
+        sort: sortClause
+      }, {rebloggedPost: true});
 
     } else {
       rawPosts = await Post.find({

@@ -1,4 +1,5 @@
 parasails.registerPage('create-post', {
+  components: {VueTrix},
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
@@ -8,7 +9,7 @@ parasails.registerPage('create-post', {
     formErrors: { /* … */ },
     formData: {
       postType: 'text',
-      textContent: '',
+      textContent: '<div></div>',
     },
     // Form rules
     formRules: {

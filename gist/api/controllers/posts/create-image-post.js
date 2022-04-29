@@ -88,12 +88,14 @@ module.exports = {
       return 'uploadFailed';
     });
     let slug = await sails.helpers.createPostSlug.with({title});
+    let hotScore = await sails.helpers.getHotScore.with({currentScore: -1});
     let newFields = {
       user: this.req.me.id,
       title,
       imageContent: result.fd,
       contentType: 'image',
-      slug
+      slug,
+      hotScore
     };
     let newPost = await Post.create(newFields).fetch();
     return exits.success({postId: newPost.id, slug});

@@ -29,7 +29,10 @@
                 {{title}}
             </h4>
             <div v-if="contentType === 'text' || (rebloggedPost && rebloggedPost.contentType === 'text')"
-                 class="rounded user-content">{{getTextContent()}}</div>
+                 class="rounded user-content p-3 border trix-content">
+                <div v-html="getTextContent()">
+                </div>
+                </div>
             <div v-else-if="contentType === 'image' || (rebloggedPost && rebloggedPost.contentType === 'image')" class="mt-2">
                 <img :src="getImageUrl()" style="max-width:100%;max-height:600px" class="rounded"/>
             </div>

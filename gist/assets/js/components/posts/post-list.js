@@ -47,8 +47,8 @@ parasails.registerComponent('postList', {
                       <div v-if="post.contentType ==='image' || (post.rebloggedPost && post.rebloggedPost.contentType === 'image')" class="card-img-top d-flex align-items-center justify-content-center" style="overflow: hidden;height: 13rem">
                           <img  :src="getImageUrl(post)" class="d-inline-block" style="width:auto;height:100%;" :title="post.title" :alt="post.title">
                       </div>
-                      <div v-else-if="post.contentType ==='text' || (post.rebloggedPost && post.rebloggedPost.contentType === 'text')" class="fade-overflow user-content text-dark p-3  border-bottom" style="height: 13rem" >
-                          {{getTextContent(post)}}
+                      <div v-else-if="post.contentType ==='text' || (post.rebloggedPost && post.rebloggedPost.contentType === 'text')" class="fade-overflow user-content trix-content p-3  border-bottom" style="height: 13rem" >
+                          <div class="text-dark" v-html="getTextContent(post)"></div>
                       </div>
                   </a>
                   <div class="card-body py-2 px-3 border-top">

@@ -16,6 +16,7 @@
     "sails-hook-sockets": "^2.0.0",
     "sails-hook-uploads": "^0.4.3",
     "sails-postgresql": "^4.0.0",
+    "sanitize-html": "^2.7.0",
     "sharp": "^0.30.3",
     "skipper-s3": "^0.6.0"
   },

@@ -51,12 +51,20 @@ module.exports = {
       throw 'emailNotVerified';
     }
     let slug = await sails.helpers.createPostSlug.with({title});
+    let hotScore = await sails.helpers.getHotScore.with({currentScore: -1});
+
+    //************** Danger Zone ******************
+    //* Must store white-list sanitized textContent
+    //*********************************************
+    let sanitizedTextContent = await sails.helpers.sanitizeHtml.with({unsafeHtml: textContent});
+
     let newFields = {
       user: this.req.me.id,
       title,
-      textContent,
+      textContent: sanitizedTextContent,
       contentType: 'text',
-      slug
+      slug,
+      hotScore
     };
     let newPost = await Post.create(newFields).fetch();
     return exits.success({postId: newPost.id, slug});
