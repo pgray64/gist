@@ -375,6 +375,7 @@ module.exports = {
   ***************************************************************************/
   custom: {
     baseUrl: 'https://gist.gg',
+    baseDomain: 'gist.gg',
     internalEmailAddress: 'support@gist.gg',
 
     // sendgridSecret: 'SG.fake.3e0Bn0qSQVnwb1E4qNPz9JZP5vLZYqjh7sn8S93oSHU',
