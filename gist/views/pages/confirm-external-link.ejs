@@ -1,0 +1,20 @@
+<div id="confirm-external-link" v-cloak>
+    <div class="container pt-1 pt-sm-3 pb-5">
+        <h3 class="text-danger">
+            External link warning
+        </h3>
+        <h5 class="border rounded p-4 mt-4">
+            <div class=" mb-4">
+                The following is a link to an external website that is not associated with Gist.
+                We are not responsible for anything that happens once you leave Gist. Please proceed with caution.
+            </div>
+            <div v-if="urlValid" class="text-center font-weight-bold user-content">
+                <a :href="url" rel="nofollow" class="text-info">{{url}}</a>
+            </div>
+            <div v-else class="font-italic">
+                Invalid URL
+            </div>
+        </h5>
+    </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

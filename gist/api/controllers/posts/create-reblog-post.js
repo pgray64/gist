@@ -69,7 +69,7 @@ module.exports = {
       select: ['hotScore'],
       where: {id: rebloggedPostId}
     });
-    let newHotScore = await sails.helpers.getHotScore.with({currentScore: rebloggedPost.hotScore});
+    let newHotScore = sails.helpers.getHotScore.with({currentScore: rebloggedPost.hotScore});
     await Post.update({id: rebloggedPostId}).set({hotScore: newHotScore});
     return exits.success({postId: newPost.id, slug});
   }

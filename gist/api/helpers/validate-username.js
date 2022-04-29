@@ -5,7 +5,7 @@ module.exports = {
 
 
   description: '',
-
+  sync: true,
 
   inputs: {
     username: {
@@ -23,7 +23,7 @@ module.exports = {
   },
 
 
-  fn: async function ({username}, exits) {
+  fn: function ({username}, exits) {
     let isValid = username &&
       username.length >= sails.config.custom.usernameMinLength &&
       username.length <= sails.config.custom.usernameMaxLength &&

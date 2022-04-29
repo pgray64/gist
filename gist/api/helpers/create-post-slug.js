@@ -5,6 +5,7 @@ module.exports = {
 
 
   description: '',
+  sync: true,
 
 
   inputs: {
@@ -24,7 +25,7 @@ module.exports = {
   },
 
 
-  fn: async function ({title}) {
+  fn: function ({title}) {
     let slug = (title || '').replace(/[^0-9a-zA-Z]/g, ' ').trim();
     let parts = slug.split(' ');
     slug = parts.filter(c => c).join('-')

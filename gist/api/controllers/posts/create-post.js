@@ -50,13 +50,13 @@ module.exports = {
     if (this.req.me.emailStatus !== 'confirmed') {
       throw 'emailNotVerified';
     }
-    let slug = await sails.helpers.createPostSlug.with({title});
-    let hotScore = await sails.helpers.getHotScore.with({currentScore: -1});
+    let slug = sails.helpers.createPostSlug.with({title});
+    let hotScore = sails.helpers.getHotScore.with({currentScore: -1});
 
     //************** Danger Zone ******************
     //* Must store white-list sanitized textContent
     //*********************************************
-    let sanitizedTextContent = await sails.helpers.sanitizeHtml.with({unsafeHtml: textContent});
+    let sanitizedTextContent = sails.helpers.sanitizeHtml.with({unsafeHtml: textContent});
 
     let newFields = {
       user: this.req.me.id,

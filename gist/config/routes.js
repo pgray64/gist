@@ -38,6 +38,7 @@ module.exports.routes = {
   'GET /:username': { action: 'view-user' },
 
   'GET /posts/trending': { action: 'posts/view-trending' },
+  'GET /confirm-external-link': { action: 'view-confirm-external-link' },
 
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗

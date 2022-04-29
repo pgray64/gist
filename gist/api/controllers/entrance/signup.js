@@ -78,7 +78,7 @@ the account verification message.)`,
   fn: async function ({emailAddress, username, password, fullName}) {
 
     let newEmailAddress = emailAddress.toLowerCase();
-    let usernameIsValid = await sails.helpers.validateUsername(username);
+    let usernameIsValid = sails.helpers.validateUsername(username);
     if (!usernameIsValid) {
       throw 'usernameAlreadyInUse';
     }

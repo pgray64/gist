@@ -1,4 +1,5 @@
 const sanitizeHtml = require("sanitize-html");
+const URL = require("url").URL;
 module.exports = {
 
 
@@ -6,6 +7,7 @@ module.exports = {
 
 
   description: 'Return sanitized html',
+  sync: true,
 
 
   inputs: {
@@ -25,18 +27,18 @@ module.exports = {
   },
 
 
-  fn: async function ({unsafeHtml}) {
+  fn: function ({unsafeHtml}) {
     let sanitizedHtml = sanitizeHtml(unsafeHtml,
       {
         allowProtocolRelative: false,
         allowedSchemes: [ 'https', 'http' ],
         transformTags: {
           'a': function(tagName, attribs) {
-            let isValid = isUrlValid(attribs.href);
+            let isValid = sails.helpers.validateUrl.with({url: attribs.href});
             return {
               tagName:  isValid ? 'a' : 'span',
               attribs: isValid ? {
-                href: '/confirm-external-link/' + encodeURIComponent(attribs.href)
+                href: getLinkUrl(attribs.href)
               } : {}
             };},
         }
@@ -44,12 +46,13 @@ module.exports = {
     return sanitizedHtml;
   }
 
-
 };
-function isUrlValid(url) {
-  if (!url) {
-    return false;
+function getLinkUrl(url) {
+  let urlLower = url.toLowerCase();
+  const baseDomain = sails.config.custom.baseDomain;
+  if (urlLower === `https://${baseDomain}` || urlLower === `http://${baseDomain}` || urlLower.startsWith(`https://${baseDomain}/`) || urlLower.startsWith(`http://${baseDomain}/`)) {
+    return url;
   }
-  url = url.toLowerCase();
-  return url.startsWith('http://') || url.startsWith('https://');
+  return '/confirm-external-link?to=' + encodeURIComponent(url);
 }
+

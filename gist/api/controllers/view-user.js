@@ -22,7 +22,7 @@ module.exports = {
   fn: async function () {
     let username = this.req.param('username') || '';
     username = username.toLowerCase();
-    let usernameIsValid = await sails.helpers.validateUsername(username);
+    let usernameIsValid = sails.helpers.validateUsername(username);
     if (!usernameIsValid) {
       throw 'notFound';
     }

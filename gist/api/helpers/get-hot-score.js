@@ -7,7 +7,7 @@ module.exports = {
 
 
   description: '',
-
+  sync: true,
 
   inputs: {
     currentScore: {
@@ -26,7 +26,7 @@ module.exports = {
   },
 
 
-  fn: async function ({currentScore}) {
+  fn: function ({currentScore}) {
     let nowMs = Date.now();
     let u = Math.max(currentScore, weeklyHotRankingDecayRate * nowMs)
     let v = Math.min(currentScore, weeklyHotRankingDecayRate * nowMs)

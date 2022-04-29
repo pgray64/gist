@@ -87,8 +87,8 @@ module.exports = {
       }
       return 'uploadFailed';
     });
-    let slug = await sails.helpers.createPostSlug.with({title});
-    let hotScore = await sails.helpers.getHotScore.with({currentScore: -1});
+    let slug = sails.helpers.createPostSlug.with({title});
+    let hotScore = sails.helpers.getHotScore.with({currentScore: -1});
     let newFields = {
       user: this.req.me.id,
       title,
