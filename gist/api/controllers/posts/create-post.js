@@ -23,17 +23,10 @@ module.exports = {
     success: {
       description: 'Post created'
     },
-    uploadFailed : {
-      statusCode: 500,
-      description: 'File upload failed.'
-    },
-    maxFileSizeExceeded: {
+
+    maxTextSizeExceeded: {
       statusCode: 400,
-      description: 'File is too large to upload.'
-    },
-    fileTypeNotAllowed: {
-      statusCode: 400,
-      description: 'File type is not allowed.'
+      description: 'Text content is too long.'
     },
     badRequest: {
       statusCode: 400,
@@ -41,7 +34,7 @@ module.exports = {
     },
     emailNotVerified: {
       statusCode: 403,
-      description: 'Email is not verified'
+      description: 'Email is not verified.'
     }
   },
 
@@ -50,6 +43,11 @@ module.exports = {
     if (this.req.me.emailStatus !== 'confirmed') {
       throw 'emailNotVerified';
     }
+    // We check this before and after sanitization on purpose. Don't want to waste CPU cycles
+    // parsing massive html doc
+    if (textContent.length > sails.config.custom.userMaxPostTextLength) {
+      throw 'maxTextSizeExceeded';
+    }
     let slug = sails.helpers.createPostSlug.with({title});
     let hotScore = sails.helpers.getHotScore.with({currentScore: -1});
 
@@ -57,7 +55,9 @@ module.exports = {
     //* Must store white-list sanitized textContent
     //*********************************************
     let sanitizedTextContent = sails.helpers.sanitizeHtml.with({unsafeHtml: textContent});
-
+    if (sanitizedTextContent.length > sails.config.custom.userMaxPostTextLength) {
+      throw 'maxTextSizeExceeded';
+    }
     let newFields = {
       user: this.req.me.id,
       title,

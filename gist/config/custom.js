@@ -114,6 +114,7 @@ module.exports.custom = {
   userMaxPostImageSizeBytes: 10 * 1024 * 1024,
   userMaxPostImageSizeFriendly: '10 MB',
   userPostAllowedFiletypes: ['image/png', 'image/jpeg', 'image/gif', 'image/bmp'],
+  userMaxPostTextLength: 50000,
   // Pagination
   userListPostsPerPage: 12,
   userListCommentsPerPage: 12,
