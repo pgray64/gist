@@ -85,9 +85,10 @@ module.exports = {
         slug: p.slug,
         rebloggedPost: p.rebloggedPost ? {
           id: p.rebloggedPost.id,
+          isDeleted: p.rebloggedPost.deletedAt,
           title: p.rebloggedPost.title,
-          textContent: p.rebloggedPost.textContent,
-          imageContent: p.rebloggedPost.imageContent,
+          textContent: p.rebloggedPost.deletedAt ? '' : p.rebloggedPost.textContent,
+          imageContent: p.rebloggedPost.deletedAt ? '' : p.rebloggedPost.imageContent,
           contentType: p.rebloggedPost.contentType,
           slug: p.rebloggedPost.slug,
           user: p.user

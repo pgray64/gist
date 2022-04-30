@@ -44,12 +44,16 @@ parasails.registerComponent('postList', {
                       </div>
                   </div>
                   <a :href="getPostUrl(post)" class="text-decoration-none">
-                      <div v-if="post.contentType ==='image' || (post.rebloggedPost && post.rebloggedPost.contentType === 'image')" class="card-img-top d-flex align-items-center justify-content-center" style="overflow: hidden;height: 13rem">
+                      <div v-if="post.rebloggedPost && post.rebloggedPost.isDeleted" class="p-3 text-center" style="height: 13rem">
+                          <div class="text-danger font-weight-bold">[Deleted by user]</div>
+                      </div>
+                      <div v-else-if="post.contentType ==='image' || (post.rebloggedPost && post.rebloggedPost.contentType === 'image')" class="card-img-top d-flex align-items-center justify-content-center" style="overflow: hidden;height: 13rem">
                           <img  :src="getImageUrl(post)" class="d-inline-block" style="width:auto;height:100%;" :title="post.title" :alt="post.title">
                       </div>
                       <div v-else-if="post.contentType ==='text' || (post.rebloggedPost && post.rebloggedPost.contentType === 'text')" class="fade-overflow user-content trix-content p-3  border-bottom" style="height: 13rem" >
                           <div class="text-dark" v-html="getTextContent(post)"></div>
                       </div>
+
                   </a>
                   <div class="card-body py-2 px-3 border-top">
                       <div class="user-content small" style="white-space: nowrap;">

@@ -168,6 +168,10 @@ without necessarily having a billing card.`
       maxLength: 30,
       description: 'Displayed version of username, without lowercase applied'
     },
+    isBanned: {
+      type: 'boolean',
+      defaultsTo: false
+    },
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝

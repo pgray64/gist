@@ -39,7 +39,7 @@ module.exports = {
     if (isReblog) {
       rawRebloggedPost = await Post.findOne({
         where: {id: post.rebloggedPost},
-        select: ['title', 'textContent', 'imageContent', 'contentType', 'createdAt', 'user', 'slug']
+        select: ['title', 'textContent', 'imageContent', 'contentType', 'createdAt', 'user', 'slug', 'deletedAt']
       }, {user: true});
     }
     if (post.contentType === 'image') {
@@ -74,8 +74,9 @@ module.exports = {
         id: rawRebloggedPost.id,
         slug: rawRebloggedPost.slug,
         title: rawRebloggedPost.title,
-        textContent: rawRebloggedPost.textContent,
-        imageUrl: path.join(sails.config.custom.userContentS3EdgeUrl, rawRebloggedPost.imageContent),
+        isDeleted: rawRebloggedPost.deletedAt,
+        textContent: rawRebloggedPost.deletedAt ? '' : rawRebloggedPost.textContent,
+        imageUrl: rawRebloggedPost.deletedAt ? '' : path.join(sails.config.custom.userContentS3EdgeUrl, rawRebloggedPost.imageContent),
         contentType: rawRebloggedPost.contentType,
         createdAt: rawRebloggedPost.createdAt,
         userId: rawRebloggedPost.user.id,

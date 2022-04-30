@@ -30,7 +30,9 @@ parasails.registerPage('post', {
     this.hasMoreComments = result.hasMore;
     this.commentList = result.comments;
     this.commentsLoading = false;
-    this.isLongTextPost = (this.contentType === 'text' || (this.rebloggedPost && this.rebloggedPost.contentType === 'text')) && this.$refs.textContentHolder.clientHeight > this.maxCollapsedTextPostHeight;
+    this.isLongTextPost = (this.contentType === 'text' || (this.rebloggedPost && this.rebloggedPost.contentType === 'text'))
+      && this.$refs.textContentHolder    // Deleted posts won't have a textContentHolder
+      && this.$refs.textContentHolder.clientHeight > this.maxCollapsedTextPostHeight;
   },
   computed: {
     isLoggedIn: function() {

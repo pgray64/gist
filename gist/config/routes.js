@@ -41,6 +41,8 @@ module.exports.routes = {
   'GET /confirm-external-link': { action: 'view-confirm-external-link' },
   'GET /users/following': { action: 'users/view-followed-users' },
 
+  // Admin pages
+  'GET /admin/home': { action: 'admin/view-home' },
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗

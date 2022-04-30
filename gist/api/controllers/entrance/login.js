@@ -76,6 +76,7 @@ and exposed as \`req.me\`.)`
     // regardless of which database we're using)
     var userRecord = await User.findOne({
       emailAddress: emailAddress.toLowerCase(),
+      isBanned: false
     });
 
     // If there was no matching user, respond thru the "badCombo" exit.

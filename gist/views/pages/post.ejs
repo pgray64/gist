@@ -39,9 +39,12 @@
             <h4 v-else>
                 {{title}}
             </h4>
-            <div v-if="contentType === 'text' || (rebloggedPost && rebloggedPost.contentType === 'text')"
-                 class="rounded border" ref="textContentHolder">
-                <div class="user-content p-3" :class="[isLongTextPost && !isTextPostExpanded ? 'fade-overflow collapsed-text-post-content': '']">
+            <div v-if="rebloggedPost && rebloggedPost.isDeleted">
+                <span class="text-danger font-weight-bold">[Deleted by user]</span>
+            </div>
+            <div v-else-if="contentType === 'text' || (rebloggedPost && rebloggedPost.contentType === 'text')"
+                 class="rounded border shadow-sm" ref="textContentHolder">
+                <div class="user-content p-4" :class="[isLongTextPost && !isTextPostExpanded ? 'fade-overflow collapsed-text-post-content': '']">
                     <div class="trix-content" v-html="getTextContent()"></div>
                 </div>
                 <div v-if="isLongTextPost" class="text-center my-2">
