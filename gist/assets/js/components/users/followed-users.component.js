@@ -44,8 +44,8 @@ parasails.registerComponent('followedUsers', {
       <div v-else class="col-12 col-sm-6 user-content">
       <hr v-if="users.length > 0"/>
           <div class="" v-for="user in users">
-              <button class="btn btn-sm  btn-outline-danger mr-2" @click="removeFollowed(user.id)">
-                <span class="fa fa-minus"></span>
+              <button class="btn btn-sm btn-danger mr-2" @click="removeFollowed(user.id)">
+                <span class="fa fa-remove"></span>
               </button>
               <a :href="getUserLink(user)">{{user.displayUsername}}</a>
               <hr/>
