@@ -39,6 +39,7 @@ module.exports.routes = {
 
   'GET /posts/trending': { action: 'posts/view-trending' },
   'GET /confirm-external-link': { action: 'view-confirm-external-link' },
+  'GET /users/following': { action: 'users/view-followed-users' },
 
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
@@ -80,6 +81,6 @@ module.exports.routes = {
   'POST /api/v1/posts/list-followed-posts': { action: 'posts/list-followed-posts' },
   'DELETE /api/v1/posts/delete-post': { action: 'posts/delete-post' },
   'DELETE /api/v1/posts/delete-post-comment': { action: 'posts/delete-post-comment' },
-
+  'GET /api/v1/users/list-followed-users': { action: 'users/list-followed-users' },
 
 };

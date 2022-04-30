@@ -48,8 +48,11 @@ module.exports = {
 
     let canReblog = true; // Not logged-in user can click reblog, but will be redirected to login
     let canComment = (!this.req.me || !this.req.me.id) || this.req.me.emailStatus === 'confirmed'; // same for comments
+    let isFollowing = false;
 
     if (this.req.me && this.req.me.id) {
+      // If logged in, see if we are following this user
+      isFollowing = await sails.helpers.isUserFollowing.with({currentUser: this.req.me.id, otherUser: post.user.id});
       // Can't reblog your own post or a reblog of your own post
       if (post.user.id === this.req.me.id || (post.rebloggedPost && post.rebloggedPost.user === this.req.me.id) ||
         this.req.me.emailStatus !== 'confirmed') {
@@ -90,7 +93,8 @@ module.exports = {
       username: post.user.displayUsername,
       canReblog,
       rebloggedPost,
-      canComment
+      canComment,
+      isFollowing
     };
 
   }

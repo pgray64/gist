@@ -1,11 +1,9 @@
-parasails.registerPage('user', {
+parasails.registerPage('followed-users', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    page: 0,
-    loading: false,
-    loadingFollow: false,
+    //…
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -17,35 +15,10 @@ parasails.registerPage('user', {
   mounted: async function() {
     //…
   },
-  computed: {
-    isLoggedIn: function() {
-      return !!this.me && this.me.id
-    },
-    isSelf: function() {
-      return this.me && this.me.id === this.user.id;
-    }
-  },
+  computed: {},
+
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
-  methods: {
-    async loadPosts() {
-      this.loading = true;
-      this.page++;
-      let result = await Cloud.listUserPosts(this.user.id, this.page);
-      this.hasMore = result.hasMore;
-      this.posts = this.posts.concat(result.posts);
-      this.loading = false;
-    },
-    async setFollowUser(newVal) {
-      if (!this.isLoggedIn) {
-        window.location = '/login';
-        return;
-      }
-      this.loadingFollow = true;
-      await Cloud.updateFollowUser(this.user.id, newVal);
-      this.isFollowing = newVal;
-      this.loadingFollow = false;
-    }
-  }
+  methods: {}
 });

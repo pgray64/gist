@@ -7,11 +7,22 @@
             <a :href="getUserUrl(username)" class="mr-1">{{username}}</a>
             <span class="text-dark font-italic small mr-3"><js-timestamp :at="createdAt"></js-timestamp></span>
             <span class="float-sm-right">
-                <button type="button" @click="openDeleteConfirmation" class="btn my-1 btn-sm btn-outline-danger " v-if="isOwnPost && !deleteConfirming"><span class="fa fa-trash-o mr-1"></span>Delete post</button>
-                <span  v-if="deleteConfirming">
-                    <button type="button" class="btn my-1 btn-sm btn-secondary mr-1" @click="cancelDelete">Cancel</button>
-                    <ajax-button type="button" class="btn my-1 btn-sm btn-danger mr-1" @click="performDelete" :syncing="deleteSyncing">Confirm deletion</ajax-button>
+                <span v-if="isOwnPost">
+                    <button type="button" @click="openDeleteConfirmation" class="btn my-1 btn-sm btn-outline-danger " v-if="!deleteConfirming"><span class="fa fa-trash-o mr-1"></span>Delete post</button>
+                    <span  v-if="deleteConfirming">
+                        <button type="button" class="btn my-1 btn-sm btn-secondary mr-1" @click="cancelDelete">Cancel</button>
+                        <ajax-button type="button" class="btn my-1 btn-sm btn-danger mr-1" @click="performDelete" :syncing="deleteSyncing">Confirm deletion</ajax-button>
+                    </span>
                 </span>
+                <ajax-button v-else :syncing="loadingFollow"  type="button" class="btn btn-sm my-1 my-sm-0" :class="[isFollowing ? 'btn-info' : 'btn-outline-info']"
+                                         @click="setFollowUser(!isFollowing)">
+                    <span v-if="isFollowing">
+                       <span class="fa fa-check-circle mr-1"></span>Following
+                    </span>
+                    <span v-else="!isFollowing">
+                         <span class="fa fa-user-plus mr-1"></span>Follow user
+                    </span>
+                </ajax-button>
             </span>
         </h6>
         <div v-if="rebloggedPost" class="text-info small text-uppercase font-weight-bold"><span class="mr-1 fa fa-retweet"></span>Reblogged</div>

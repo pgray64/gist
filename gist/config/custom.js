@@ -117,6 +117,7 @@ module.exports.custom = {
   // Pagination
   userListPostsPerPage: 12,
   userListCommentsPerPage: 12,
+  followedUsersPerPage: 12,
   // Username
   usernameMinLength: 5,
   usernameMaxLength: 50,

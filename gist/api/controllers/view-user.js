@@ -36,13 +36,7 @@ module.exports = {
     // If logged in, see if we are following this user
     let isFollowing = false;
     if (this.req.me && this.req.me.id) {
-      let me = await User.findOne({
-        where: {id: this.req.me.id},
-        select: []
-      }).populate('followed', {
-        where: {id: user.id}
-      });
-      isFollowing = me.followed.length > 0;
+      isFollowing = await sails.helpers.isUserFollowing.with({currentUser: this.req.me.id, otherUser: user.id})
     }
     // Respond with view.
     return {

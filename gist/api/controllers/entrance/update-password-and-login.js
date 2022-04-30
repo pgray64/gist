@@ -61,7 +61,8 @@ module.exports = {
     .set({
       password: hashed,
       passwordResetToken: '',
-      passwordResetTokenExpiresAt: 0
+      passwordResetTokenExpiresAt: 0,
+      emailStatus: 'confirmed'
     });
 
     // Log the user in.

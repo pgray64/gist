@@ -44,10 +44,10 @@ module.exports = {
     let limitClause = perPage + 1;
     let offsetClause = page * perPage;
     let selectClause =  ['title', 'textContent', 'imageContent', 'contentType', 'slug', 'rebloggedPost', 'hotScore'];
-    if (type === 'user' || type === 'followedByUser') {
-      if (!userId) {
-        throw 'badArguments';
-      }
+    if (!userId && (type === 'user' || type === 'followedByUser')) {
+      throw 'badArguments';
+    }
+    if (type === 'user') {
       whereClause = {user: userId, deletedAt: null};
       sortClause = 'id desc';
     } else if (type === 'trending') {
@@ -60,7 +60,7 @@ module.exports = {
         [userId, limitClause, offsetClause]);
       let postIds = result.rows.map(r => r.id);
       rawPosts = await Post.find({where: { id: postIds }, select: selectClause, limit: limitClause,
-        sort: sortClause
+        sort: 'hotScore desc'
       }, {rebloggedPost: true});
 
     } else {

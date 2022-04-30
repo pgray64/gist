@@ -78,9 +78,7 @@ parasails.registerComponent('postList', {
   },
 
   beforeDestroy: function() {
-    if(this.formatType === 'timeago') {
-      clearInterval(this.interval);
-    }
+
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗

@@ -15,7 +15,8 @@ parasails.registerPage('post', {
     deleteSyncing: false,
     isLongTextPost: false,
     maxCollapsedTextPostHeight: 250,
-    isTextPostExpanded: false
+    isTextPostExpanded: false,
+    loadingFollow: false,
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -29,7 +30,7 @@ parasails.registerPage('post', {
     this.hasMoreComments = result.hasMore;
     this.commentList = result.comments;
     this.commentsLoading = false;
-    this.isLongTextPost = this.contentType === 'text' && this.$refs.textContentHolder.clientHeight > this.maxCollapsedTextPostHeight;
+    this.isLongTextPost = (this.contentType === 'text' || (this.rebloggedPost && this.rebloggedPost.contentType === 'text')) && this.$refs.textContentHolder.clientHeight > this.maxCollapsedTextPostHeight;
   },
   computed: {
     isLoggedIn: function() {
@@ -140,6 +141,16 @@ parasails.registerPage('post', {
     },
     setExpandedTextPost(val) {
       this.isTextPostExpanded = val;
+    },
+    async setFollowUser(newVal) {
+      if (!this.isLoggedIn) {
+        window.location = '/login';
+        return;
+      }
+      this.loadingFollow = true;
+      await Cloud.updateFollowUser(this.userId, newVal);
+      this.isFollowing = newVal;
+      this.loadingFollow = false;
     }
   }
 });

@@ -1,0 +1,14 @@
+<div id="followed-users" v-cloak>
+    <div class="container">
+        <account-notification-banner></account-notification-banner>
+    </div>
+    <div class="container pt-1 pt-sm-3 pb-5">
+        <h3>
+            <span class="">Following</span>
+        </h3>
+        <div class="mt-4">
+            <followed-users></followed-users>
+        </div>
+    </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
