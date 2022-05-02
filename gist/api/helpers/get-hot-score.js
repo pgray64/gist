@@ -28,8 +28,8 @@ module.exports = {
 
   fn: function ({currentScore}) {
     let nowMs = Date.now();
-    let u = Math.max(currentScore, weeklyHotRankingDecayRate * nowMs)
-    let v = Math.min(currentScore, weeklyHotRankingDecayRate * nowMs)
+    let u = Math.max(currentScore, weeklyHotRankingDecayRate * nowMs);
+    let v = Math.min(currentScore, weeklyHotRankingDecayRate * nowMs);
     return u + Math.log1p(Math.exp(v-u));
   }
 

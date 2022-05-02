@@ -49,7 +49,7 @@ module.exports.datastores = {
     *                                                                          *
     ***************************************************************************/
     adapter: 'sails-postgresql',
-    // url: 'postgresql://tinyshop_local:test@localhost:5432/tinyshop',
+    // url: 'postgresql://gist_user:test@localhost:5432/gist',
     // use env var: sails_datastores__default__url
     ssl: false
 
