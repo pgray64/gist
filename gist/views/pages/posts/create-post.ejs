@@ -63,6 +63,7 @@
                     <cloud-error v-if="cloudError==='maxFileSizeExceeded' || maxFileSizeExceeded">Max upload size is <%=sails.config.custom.userMaxPostImageSizeFriendly%>.</cloud-error>
                     <cloud-error v-else-if="cloudError==='fileTypeNotAllowed'">You can only upload an image file.</cloud-error>
                     <cloud-error v-else-if="cloudError==='maxTextSizeExceeded'">Content is too long - submit a blog post, not a novel.</cloud-error>
+                    <cloud-error v-else-if="cloudError==='tooSoon'">You're doing this too often.</cloud-error>
                     <cloud-error v-else-if="cloudError"></cloud-error>
                 </div>
                 <div class="col-sm-6">

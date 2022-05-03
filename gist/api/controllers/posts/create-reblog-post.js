@@ -55,7 +55,7 @@ module.exports = {
     // We rely on unique constraint: UQ_post_user_rebloggedPost to prevent double reblogging
     let slug = post.slug;
     let rebloggedPostId = post.contentType === 'reblog' ? post.rebloggedPost.id : post.id;
-    let rebloggedHotScore = sails.helpers.getHotScore.with({currentScore: -1});
+    let rebloggedHotScore = sails.helpers.posts.getHotScore.with({currentScore: -1});
     let newFields = {
       user: this.req.me.id,
       title: post.title,
@@ -71,7 +71,7 @@ module.exports = {
       select: ['hotScore'],
       where: {id: rebloggedPostId}
     });
-    let originalPostHotScore = sails.helpers.getHotScore.with({currentScore: rebloggedPost.hotScore});
+    let originalPostHotScore = sails.helpers.posts.getHotScore.with({currentScore: rebloggedPost.hotScore});
     await Post.update({id: rebloggedPostId}).set({hotScore: originalPostHotScore});
     return exits.success({postId: newPost.id, slug});
   }

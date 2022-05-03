@@ -79,7 +79,7 @@ parasails.registerPage('create-post', {
       return this.formData.imageFile && this.formData.imageFile.size > this.maxFileSize;
     },
     preventImages(event) {
-      console.log('attached')
+      // this isn't working, oh well
       event.preventDefault();
     }
   }

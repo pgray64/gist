@@ -35,6 +35,10 @@ module.exports = {
     emailNotVerified: {
       statusCode: 403,
       description: 'Email is not verified.'
+    },
+    tooSoon: {
+      status: 429,
+      description: 'Posting rate limit exceeded'
     }
   },
 
@@ -48,8 +52,13 @@ module.exports = {
     if (textContent.length > sails.config.custom.userMaxPostTextLength) {
       throw 'maxTextSizeExceeded';
     }
-    let slug = sails.helpers.createPostSlug.with({title});
-    let hotScore = sails.helpers.getHotScore.with({currentScore: -1});
+    let slug = sails.helpers.posts.createPostSlug.with({title});
+    let hotScore = sails.helpers.posts.getHotScore.with({currentScore: -1});
+
+    let untilCanPost = await sails.helpers.posts.userCanPost.with({userId: this.req.me.id});
+    if (untilCanPost > 0) {
+      return exits.tooSoon({waitTime: untilCanPost});
+    }
 
     //************** Danger Zone ******************
     //* Must store white-list sanitized textContent

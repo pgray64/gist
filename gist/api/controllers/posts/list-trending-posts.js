@@ -27,7 +27,7 @@ module.exports = {
     if (page < 0) {
       return [];
     }
-    let {posts, hasMore} = await sails.helpers.listPosts.with({page, type: 'trending'});
+    let {posts, hasMore} = await sails.helpers.posts.listPosts.with({page, type: 'trending'});
     return {
       posts,
       hasMore

@@ -27,7 +27,7 @@ module.exports = {
     if (page < 0) {
       return [];
     }
-    let {posts, hasMore} = await sails.helpers.listPosts.with({userId: this.req.me.id, page, type: 'followedByUser'});
+    let {posts, hasMore} = await sails.helpers.posts.listPosts.with({userId: this.req.me.id, page, type: 'followedByUser'});
     return {
       posts,
       hasMore

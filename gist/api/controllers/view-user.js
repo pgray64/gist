@@ -31,7 +31,7 @@ module.exports = {
       throw 'notFound';
     }
     const perPage = sails.config.custom.userListPostsPerPage;
-    let {posts, hasMore} = await sails.helpers.listPosts.with({userId: user.id, page: 0, type: 'user'});
+    let {posts, hasMore} = await sails.helpers.posts.listPosts.with({userId: user.id, page: 0, type: 'user'});
 
     // If logged in, see if we are following this user
     let isFollowing = false;

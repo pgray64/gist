@@ -47,6 +47,10 @@ module.exports = {
     emailNotVerified: {
       statusCode: 403,
       description: 'Email is not verified'
+    },
+    tooSoon: {
+      status: 429,
+      description: 'Posting rate limit exceeded'
     }
   },
 
@@ -57,6 +61,10 @@ module.exports = {
     }
     if (!imageFile || imageFile.isNoop) {
       throw 'badRequest';
+    }
+    let untilCanPost = await sails.helpers.posts.userCanPost.with({userId: this.req.me.id});
+    if (untilCanPost > 0) {
+      return exits.tooSoon({waitTime: untilCanPost});
     }
     let outputFileType;
     let outputExt;
@@ -87,8 +95,8 @@ module.exports = {
       }
       return 'uploadFailed';
     });
-    let slug = sails.helpers.createPostSlug.with({title});
-    let hotScore = sails.helpers.getHotScore.with({currentScore: -1});
+    let slug = sails.helpers.posts.createPostSlug.with({title});
+    let hotScore = sails.helpers.posts.getHotScore.with({currentScore: -1});
     let newFields = {
       user: this.req.me.id,
       title,
