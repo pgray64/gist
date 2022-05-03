@@ -32,8 +32,6 @@ module.exports = {
     if (posts.length === 0) {
       return 0;
     }
-    sails.log.info('pcount ' + posts.length);
-    sails.log.info('since last: ' + Date.now() - posts[0].createdAt)
     // Minute between posts
     if (Date.now() - posts[0].createdAt < minuteMs) {
       return minuteMs - (Date.now() - posts[0].createdAt);
