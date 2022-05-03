@@ -1,7 +1,59 @@
 <div id="home" v-cloak>
+    <div class="container">
+        <account-notification-banner></account-notification-banner>
+    </div>
+    <div class="container-fluid border-top pt-2 pt-sm-4 pb-5">
+        <h3 class="d-sm-flex align-items-center mx-2">
+            Admin
+        </h3>
+        <div class="mt-4">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card bg-white p-3 m-2">
+                        <h4>
 
-  <h1>TODO: Implement this page.</h1>
-  <p>(See also <em>assets/styles/pages/admin/home.less</em>, <em>assets/js/pages/admin/home.page.js</em>, and <em>api/controllers/admin/view-home.js</em>.)</p>
+                            <div class="form-inline">
+                                <span class="mr-2">Users</span>
+                                <input class="form-control mr-2" type="text" placeholder="Filter users" v-model="userSearchFilter"/>
+                                <ajax-button :syncing="loadingUsers" class="btn btn-primary" type="button" @click="searchUsers"></ajax-button>
+                            </div>
+                        </h4>
+                        <table class="table table-responsive table-sm">
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Email Status</th>
+                                <th>Name</th>
+                                <th>Is Admin</th>
+                                <th>Banned</th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr v-for="user in userList">
+                                <td>{{user.id}}</td>
+                                <td><a :href="'/' + user.displayUsername" target="_blank">{{user.displayUsername}}</a></td>
+                                <td>{{user.emailAddress}}</td>
+                                <td>{{user.emailStatus}}</td>
+                                <td>{{user.fullName}}</td>
+                                <td>{{user.isSuperAdmin}}</td>
+                                <td>{{user.isBanned}}</td>
+                                <td>
+                                    <a class="dropdown-toggle btn btn-outline-primary btn-sm" :class="{disabled: loadingUserAction}" :disabled="loadingUserAction" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                      Actions
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" type="button" @click="setBanned(user)">{{user.isBanned? 'Unban' : 'Ban'}}</button>
+                                        <button class="dropdown-item" type="button" @click="purgeUser(user)">Purge</button>
+                                        <!--<button class="dropdown-item" type="button" @click="">Make admin</button>-->
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

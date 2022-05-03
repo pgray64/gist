@@ -85,4 +85,9 @@ module.exports.routes = {
   'DELETE /api/v1/posts/delete-post-comment': { action: 'posts/delete-post-comment' },
   'GET /api/v1/users/list-followed-users': { action: 'users/list-followed-users' },
 
+  // Admin endpoints
+  'POST /api/v1/admin/admin-list-users': { action: 'admin/admin-list-users' },
+  'POST /api/v1/admin/admin-set-user-banned': { action: 'admin/admin-set-user-banned' },
+  'POST /api/v1/admin/admin-purge-user': { action: 'admin/admin-purge-user' },
+
 };
