@@ -7,6 +7,13 @@ parasails.registerPage('home', {
     userList: [],
     loadingUsers: true,
     loadingUserAction: false,
+    bannedEmailSearchFilter: '',
+    bannedEmails: [],
+    loadingBannedEmails: false,
+    loadingBanEmailAction: false,
+    emailToBan: '',
+    emailToBanInvalid: false
+
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -17,6 +24,7 @@ parasails.registerPage('home', {
   },
   mounted: async function() {
     await this.searchUsers();
+    await this.searchBannedEmails();
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -30,12 +38,13 @@ parasails.registerPage('home', {
       this.loadingUsers = false;
     },
     async setBanned(user) {
-      showConfirm('Ban user', 'Are you sure you want to ban the user "' + user.displayUsername + '"? ', 'Ban user', 'danger')
+      let newVal = !user.isBanned
+      showConfirm((newVal ? 'Ban' : 'Unban') + ' user', 'Are you sure you want to '+(newVal ? 'ban' : 'unban')+' the user "' + user.displayUsername + '"? ', 'Submit', 'danger')
         .then(async function(result) {
           if (result.isConfirmed) {
             this.loadingUserAction = true;
             await Cloud.adminSetUserBanned(user.id, !user.isBanned);
-            user.isBanned = !user.isBanned;
+            user.isBanned = newVal;
             this.loadingUserAction = false;
           }
         });
@@ -48,6 +57,28 @@ parasails.registerPage('home', {
             this.loadingUserAction = true;
             await Cloud.adminPurgeUser(user.id);
             this.loadingUserAction = false;
+          }
+        });
+    },
+    async searchBannedEmails() {
+      this.loadingBannedEmails = true;
+      let result = await Cloud.adminListBannedEmails(this.bannedEmailSearchFilter);
+      this.bannedEmails = result.emails;
+      this.loadingBannedEmails = false;
+    },
+    async setEmailBanned(email, newVal) {
+      this.emailToBanInvalid = false;
+      if (!email || !isValidEmailQuick(email)) {
+        this.emailToBanInvalid = true;
+        return;
+      }
+      showConfirm((newVal ? 'Ban' : 'Unban') + ' email', 'Are you sure you want to '+ (newVal ? 'ban' : 'unban')+' the email "' + email + '"? ', 'Submit', 'danger')
+        .then(async (result) =>  {
+          if (result.isConfirmed) {
+            this.loadingBanEmailAction = true;
+            await Cloud.adminSetEmailBanned(email, newVal);
+            this.loadingBanEmailAction = false;
+            this.searchBannedEmails();
           }
         });
     }

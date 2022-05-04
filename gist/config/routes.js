@@ -89,5 +89,7 @@ module.exports.routes = {
   'POST /api/v1/admin/admin-list-users': { action: 'admin/admin-list-users' },
   'POST /api/v1/admin/admin-set-user-banned': { action: 'admin/admin-set-user-banned' },
   'POST /api/v1/admin/admin-purge-user': { action: 'admin/admin-purge-user' },
+  'POST /api/v1/admin/admin-list-banned-emails': { action: 'admin/admin-list-banned-emails' },
+  'POST /api/v1/admin/admin-set-email-banned': { action: 'admin/admin-set-email-banned' },
 
 };

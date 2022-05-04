@@ -166,12 +166,23 @@ will be disabled and/or hidden in the UI.
             // If the logged-in user has gone missing, log a warning,
             // wipe the user id from the requesting user agent's session,
             // and then send the "unauthorized" response.
-            if (!loggedInUser || loggedInUser.isBanned) {
+            if (!loggedInUser) {
               sails.log.warn('Somehow, the user record for the logged-in user (`'+req.session.userId+'`) has gone missing....');
               delete req.session.userId;
               return res.unauthorized();
             }
 
+            // Check userId banns
+            if (loggedInUser.isBanned) {
+              delete req.session.userId;
+              return res.unauthorized();
+            }
+
+            // Check email bans
+            if (await sails.helpers.isEmailBanned.with({emailAddress: loggedInUser.emailAddress})) {
+              delete req.session.userId;
+              return res.unauthorized();
+            }
             // Add additional information for convenience when building top-level navigation.
             // (i.e. whether to display "Dashboard", "My Account", etc.)
             if (!loggedInUser.password || loggedInUser.emailStatus === 'unconfirmed') {

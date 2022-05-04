@@ -34,7 +34,7 @@ password attempt.`,
 `Note that this is NOT SUPPORTED when using virtual requests (e.g. sending
 requests over WebSockets instead of HTTP).`,
       type: 'boolean'
-    }
+    },
 
   },
 
@@ -64,6 +64,10 @@ and exposed as \`req.me\`.)`
       // To customize the response for _only this_ action, replace `responseType` with
       // something else.  For example, you might set `statusCode: 498` and change the
       // implementation below accordingly (see http://sailsjs.com/docs/concepts/controllers).
+    },
+    banned: {
+      description: 'User or email was banned',
+      statusCode: 403
     }
 
   },
@@ -76,7 +80,6 @@ and exposed as \`req.me\`.)`
     // regardless of which database we're using)
     var userRecord = await User.findOne({
       emailAddress: emailAddress.toLowerCase(),
-      isBanned: false
     });
 
     // If there was no matching user, respond thru the "badCombo" exit.
@@ -87,6 +90,13 @@ and exposed as \`req.me\`.)`
     // If the password doesn't match, then also exit thru "badCombo".
     await sails.helpers.passwords.checkPassword(password, userRecord.password)
     .intercept('incorrect', 'badCombo');
+
+    if (userRecord.isBanned) {
+      throw 'banned';
+    }
+    if ((await sails.helpers.isEmailBanned.with({emailAddress: userRecord.emailAddress}))) {
+      throw 'banned';
+    }
 
     // If "Remember Me" was enabled, then keep the session alive for
     // a longer amount of time.  (This causes an updated "Set Cookie"

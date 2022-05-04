@@ -71,13 +71,17 @@ the account verification message.)`,
       statusCode: 409,
       description: 'The provided username is unavailable.',
     },
+    emailBanned: {
+      statusCode: 403,
+      description: 'Provided email address is banned.'
+    }
 
   },
 
 
   fn: async function ({emailAddress, username, password, fullName}) {
 
-    let newEmailAddress = emailAddress.toLowerCase();
+    let newEmailAddress = emailAddress.toLowerCase().trim();
     let usernameIsValid = sails.helpers.validateUsername(username);
     if (!usernameIsValid) {
       throw 'usernameAlreadyInUse';
@@ -86,6 +90,10 @@ the account verification message.)`,
     let usernameTaken = await User.count({username: usernameLowerCase}) > 0;
     if (usernameTaken) {
       throw 'usernameAlreadyInUse';
+    }
+
+    if ((await sails.helpers.isEmailBanned.with({emailAddress: newEmailAddress}))) {
+      throw 'emailBanned';
     }
     // Build up data for the new user record and save it to the database.
     // (Also use `fetch` to retrieve the new ID so that we can use it below.)

@@ -70,6 +70,14 @@
                                 <span>New post</span>
                             </a>
                         </li>
+                        <% if(me.isSuperAdmin) { %>
+                        <li class="nav-item" >
+                            <a class="btn btn-primary mr-0 mr-md-2 mb-2 mb-md-0 d-block d-md-inline-block" href="/admin/home">
+                                <span class="fa fa-wrench mr-1"></span>
+                                <span>Admin</span>
+                            </a>
+                        </li>
+                        <% } %>
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle btn btn-outline-primary d-block d-md-inline-block" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Account</a>
                             <div class="dropdown-menu">
@@ -181,6 +189,7 @@
     <script src="/js/components/vue-trix.min.js"></script>
     <script src="/js/utilities/open-stripe-checkout.js"></script>
     <script src="/js/helpers/alert-helper.js"></script>
+    <script src="/js/helpers/string-validation-helper.js"></script>
     <script src="/js/pages/account/account-overview.page.js"></script>
     <script src="/js/pages/account/edit-password.page.js"></script>
     <script src="/js/pages/account/edit-profile.page.js"></script>

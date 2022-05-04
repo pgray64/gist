@@ -9,46 +9,87 @@
         <div class="mt-4">
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="card bg-white p-3 m-2">
-                        <h4>
+                    <div class="card  m-2">
+                        <div class="card-header">Users</div>
+                        <div class="card-body">
+                            <div class="mb-2">
 
-                            <div class="form-inline">
-                                <span class="mr-2">Users</span>
-                                <input class="form-control mr-2" type="text" placeholder="Filter users" v-model="userSearchFilter"/>
-                                <ajax-button :syncing="loadingUsers" class="btn btn-primary" type="button" @click="searchUsers"></ajax-button>
+                                <div class="form-inline">
+                                    <label class="mr-2">Users</label>
+                                    <input class="form-control mr-2" type="text" placeholder="Filter users" v-model="userSearchFilter"/>
+                                    <ajax-button :syncing="loadingUsers" class="btn btn-primary" type="button" @click="searchUsers"></ajax-button>
+                                </div>
                             </div>
-                        </h4>
-                        <table class="table table-responsive table-sm">
-                            <tr>
-                                <th>ID</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Email Status</th>
-                                <th>Name</th>
-                                <th>Is Admin</th>
-                                <th>Banned</th>
-                                <th>Actions</th>
-                            </tr>
-                            <tr v-for="user in userList">
-                                <td>{{user.id}}</td>
-                                <td><a :href="'/' + user.displayUsername" target="_blank">{{user.displayUsername}}</a></td>
-                                <td>{{user.emailAddress}}</td>
-                                <td>{{user.emailStatus}}</td>
-                                <td>{{user.fullName}}</td>
-                                <td>{{user.isSuperAdmin}}</td>
-                                <td>{{user.isBanned}}</td>
-                                <td>
-                                    <a class="dropdown-toggle btn btn-outline-primary btn-sm" :class="{disabled: loadingUserAction}" :disabled="loadingUserAction" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                      Actions
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item" type="button" @click="setBanned(user)">{{user.isBanned? 'Unban' : 'Ban'}}</button>
-                                        <button class="dropdown-item" type="button" @click="purgeUser(user)">Purge</button>
-                                        <!--<button class="dropdown-item" type="button" @click="">Make admin</button>-->
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                            <table class="table table-responsive table-sm">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Email Status</th>
+                                    <th>Name</th>
+                                    <th>Is Admin</th>
+                                    <th>Banned</th>
+                                    <th>Actions</th>
+                                </tr>
+                                <tr v-for="user in userList">
+                                    <td>{{user.id}}</td>
+                                    <td><a :href="'/' + user.displayUsername" target="_blank">{{user.displayUsername}}</a></td>
+                                    <td>{{user.emailAddress}}</td>
+                                    <td>{{user.emailStatus}}</td>
+                                    <td>{{user.fullName}}</td>
+                                    <td>{{user.isSuperAdmin}}</td>
+                                    <td>{{user.isBanned}}</td>
+                                    <td>
+                                        <a class="dropdown-toggle btn btn-outline-primary btn-sm" :class="{disabled: loadingUserAction}" :disabled="loadingUserAction" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                            Actions
+                                        </a>
+                                        <div class="dropdown-menu">
+                                            <button class="dropdown-item" type="button" @click="setBanned(user)">{{user.isBanned? 'Unban' : 'Ban'}}</button>
+                                            <button class="dropdown-item" type="button" @click="purgeUser(user)">Purge</button>
+                                            <!--<button class="dropdown-item" type="button" @click="">Make admin</button>-->
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card m-2">
+                        <div class="card-header">Banned email addresses</div>
+                        <div class="card-body">
+                            <div class="mb-2">
+
+                                <div class="form-inline">
+                                    <label class="mr-2">Ban an email address</label>
+                                    <input class="form-control mr-2" type="email" placeholder="Email Address" v-model="emailToBan"/>
+                                    <ajax-button :syncing="loadingBanEmailAction" class="btn btn-primary" type="button" @click="setEmailBanned(emailToBan, true)">Ban</ajax-button>
+                                </div>
+                                <div class="text-danger small" v-if="emailToBan && emailToBanInvalid">Email is invalid.</div>
+                            </div>
+                            <hr/>
+                            <div class="mb-2">
+
+                                <div class="form-inline">
+                                    <label class="mr-2">Banned emails</label>
+                                    <input class="form-control mr-2" type="text" placeholder="Filter banned emails" v-model="bannedEmailSearchFilter"/>
+                                    <ajax-button :syncing="loadingBannedEmails" class="btn btn-primary" type="button" @click="searchBannedEmails">Search</ajax-button>
+                                </div>
+                            </div>
+                            <table class="table table-responsive table-sm">
+                                <tr>
+                                    <th>Banned email</th>
+                                </tr>
+                                <tr v-for="row in bannedEmails">
+                                    <td>{{row.emailAddress}}</td>
+                                    <td>
+                                        <ajax-button :syncing="loadingBanEmailAction" class="btn btn-primary btn-sm" type="button" @click="setEmailBanned(row.emailAddress, false)">Unban</ajax-button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
                     </div>
 
                 </div>

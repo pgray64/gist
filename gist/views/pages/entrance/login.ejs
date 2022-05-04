@@ -17,6 +17,7 @@
           <label class="form-check-label" for="remember">Remember me</label>
         </div>
         <cloud-error v-if="cloudError==='badCombo'">The credentials you entered are not associated with an account. Please check your email and/or password and try again.</cloud-error>
+          <cloud-error v-else-if="cloudError==='banned'">This account was banned for violating our terms of service.</cloud-error>
         <cloud-error v-else-if="cloudError"></cloud-error>
         <div class="form-group">
           <ajax-button :syncing="syncing" class="btn-dark btn-lg btn-block">Sign in</ajax-button>

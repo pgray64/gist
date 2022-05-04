@@ -34,7 +34,7 @@ module.exports = {
 
     var newEmailAddress = emailAddress;
     if (newEmailAddress !== undefined) {
-      newEmailAddress = newEmailAddress.toLowerCase();
+      newEmailAddress = newEmailAddress.toLowerCase().trim();
     }
 
     // Determine if this request wants to change the current user's email address,
