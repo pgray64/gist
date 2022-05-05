@@ -76,7 +76,12 @@ parasails.registerPage('home', {
         .then(async (result) =>  {
           if (result.isConfirmed) {
             this.loadingBanEmailAction = true;
-            await Cloud.adminSetEmailBanned(email, newVal);
+            try {
+              await Cloud.adminSetEmailBanned(email, newVal);
+            } catch (e) {
+              showToast('Failed to ban email', 'error');
+            }
+
             this.loadingBanEmailAction = false;
             this.searchBannedEmails();
           }

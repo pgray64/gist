@@ -36,7 +36,7 @@ module.exports = {
       return emailLower;
     }
     let domain = parts[1];
-    let left = parts[0];
+    let left = parts[0].replace(/\./g,'');
     let leftParts = left.split('+');
     if (leftParts.length < 1) {
       return emailLower;
