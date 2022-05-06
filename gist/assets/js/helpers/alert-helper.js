@@ -27,6 +27,21 @@ function showConfirm(title, text, confirmButtonText, icon) {
     position: 'top'
   });
 }
+function showTextPopup(title, text, confirmButtonText, icon) {
+  return swalWithBootstrapButtons.fire({
+    title,
+    text,
+    icon,
+    showCancelButton: true,
+    confirmButtonText,
+    reverseButtons: true,
+    position: 'top',
+    input: 'textarea',
+    inputAttributes: {
+      required: true
+    }
+  });
+}
 function showToast(title, icon) {
   return Toast.fire({
     title,

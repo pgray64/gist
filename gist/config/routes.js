@@ -84,6 +84,7 @@ module.exports.routes = {
   'DELETE /api/v1/posts/delete-post': { action: 'posts/delete-post' },
   'DELETE /api/v1/posts/delete-post-comment': { action: 'posts/delete-post-comment' },
   'GET /api/v1/users/list-followed-users': { action: 'users/list-followed-users' },
+  'POST /api/v1/posts/submit-post-report': { action: 'posts/submit-post-report' },
 
   // Admin endpoints
   'POST /api/v1/admin/admin-list-users': { action: 'admin/admin-list-users' },
@@ -93,5 +94,7 @@ module.exports.routes = {
   'POST /api/v1/admin/admin-set-email-banned': { action: 'admin/admin-set-email-banned' },
   'POST /api/v1/admin/admin-list-banned-ips': { action: 'admin/admin-list-banned-ips' },
   'POST /api/v1/admin/admin-set-ip-banned': { action: 'admin/admin-set-ip-banned' },
+  'POST /api/v1/admin/admin-list-reported-posts': { action: 'admin/admin-list-reported-posts' },
+  'POST /api/v1/admin/admin-clear-post-reports': { action: 'admin/admin-clear-post-reports' },
 
 };

@@ -153,6 +153,20 @@ parasails.registerPage('post', {
       await Cloud.updateFollowUser(this.userId, newVal);
       this.isFollowing = newVal;
       this.loadingFollow = false;
+    },
+    reportPostClicked() {
+      showTextPopup('Report post', 'Describe how this post violates Gist\'s terms of service or content policy.', 'Send report')
+        .then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              await Cloud.submitPostReport(this.id, result.value);
+              showToast('Post reported successfully', 'success');
+            } catch (e) {
+              showToast('Failed to submit report', 'error');
+            }
+
+          }
+        });
     }
   }
 });

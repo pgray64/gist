@@ -11,3 +11,8 @@ create index IX_post_hotScore on "post"("hotScore" DESC);
 create unique index UX_user_followed__user_followed_user_user_followed_user_followed_user on "user_followed__user_followed_user" ("user_followed", user_followed_user);
 alter table "user_followed__user_followed_user" add constraint FK_user_followed__user_followed foreign key("user_followed") references "user"(id);
 alter table "user_followed__user_followed_user" add constraint FK_user_followed__user_followed_user_user_followed_user foreign key("user_followed_user") references "user"(id);
+-- 5/6/22 Post report indexes and constraints
+create unique index UX_postreport_user_post on postreport("user", "post");
+create index IX_post_reportCount on post("reportCount" desc) where "deletedAt" is null;
+alter table postreport add constraint FK_postreport_post foreign key ("post") references post(id);
+alter table postreport add constraint FK_postreport_user foreign key ("user") references "user"(id);

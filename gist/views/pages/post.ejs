@@ -6,7 +6,7 @@
         <h6>
             <a :href="getUserUrl(username)" class="mr-1">{{username}}</a>
             <span class="text-dark font-italic small mr-3"><js-timestamp :at="createdAt"></js-timestamp></span>
-            <span v-if="ip" class="badge badge-pill badge-info">{{ip}}</span>
+            <span v-if="ip" class="badge badge-pill badge-info mr-3">{{ip}}</span>
             <span class="float-sm-right">
                 <span v-if="isOwnPost">
                     <button type="button" @click="openDeleteConfirmation" class="btn my-1 btn-sm btn-outline-danger " v-if="!deleteConfirming"><span class="fa fa-trash-o mr-1"></span>Delete post</button>
@@ -60,7 +60,11 @@
         </div>
         <div class="mt-3" v-if="!addingComment">
             <ajax-button type="button" :syncing="submittingReblog" @click="reblog()" class="btn btn-sm btn-info mb-1 mr-1" :disabled="!canReblog"><span class="fa fa-share mr-1"></span>Reblog</ajax-button>
-            <button type="button" class="btn btn-sm btn-outline-primary mb-1" :disabled="!canComment" @click="showAddComment()"><span class="fa fa-comment-o mr-1"></span>Add a comment</button>
+            <button type="button" class="btn btn-sm btn-outline-primary mb-1 mr-2" :disabled="!canComment" @click="showAddComment()"><span class="fa fa-comment-o mr-1"></span>Add a comment</button>
+            <span v-if="!isOwnPost">
+                <a href="javascript:void(0)" class="text-danger small" @click="reportPostClicked()">
+                    <span class="fa fa-flag mr-1"></span>Report post</a>
+            </span>
         </div>
         <div class="mt-3" v-if="addingComment">
         <textarea style="resize:none" rows="4" class="form-control" v-model="newCommentContent"
