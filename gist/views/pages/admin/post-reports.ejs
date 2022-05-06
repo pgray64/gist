@@ -1,0 +1,72 @@
+<div id="post-reports" v-cloak>
+    <div class="container">
+        <account-notification-banner></account-notification-banner>
+    </div>
+    <div class="container-fluid border-top pt-2 pt-sm-4 pb-5">
+        <div class="container">
+            <h4 class="d-sm-flex align-items-center align-items-center">
+                <span class="mr-2"><a href="/admin/home">Admin</a></span>
+                <span class="fa fa-chevron-right mx-2"></span>
+                <span class="mr-2">Post reports</span>
+                <span class="fa fa-chevron-right mx-2"></span>
+                <a :href="'/post/' + post.id + '/' + post.slug" target="_blank">{{post.title}}</a>
+                <span class="mx-2">by</span>
+                <a :href="'/' + post.user.username" target="_blank">{{post.user.displayUsername}}</a>
+            </h4>
+            <hr/>
+            <div class="mt-4">
+                <button :disabled="loadingAction" class="btn btn-info mr-2" @click="clearReports">Clear reports</button>
+                <button :disabled="loadingAction" class="btn btn-outline-danger mr-2" @click="deletePost">Delete post</button>
+                <button :disabled="loadingAction" class="btn btn-outline-danger mr-2" @click="banEmail">Ban email</button>
+                <button :disabled="loadingAction" class="btn btn-outline-danger mr-2" @click="banUser">Ban user</button>
+                <button :disabled="loadingAction" class="btn btn-outline-danger mr-2" @click="purgeUser">Purge user</button>
+                <div class="mt-4">
+                    <div class="form-inline">
+                        <span class="mr-1">Ban IP for</span>
+                        <select v-model="banDurationDays" class="form-control mr-2">
+                            <option :value="0">Forever</option>
+                            <option :value="1">1 Day</option>
+                            <option :value="30">30 Days</option>
+                            <option :value="90">90 Days</option>
+                            <option :value="365">1 Year</option>
+                        </select>
+                        <button :disabled="loadingAction" class="btn btn-outline-danger mr-2" @click="banIP">Ban IP</button>
+                    </div>
+                </div>
+
+
+            </div>
+            <hr/>
+            <div class="mt-4">
+                <div class="alert alert-secondary">
+                    Note that reports are not deleted when report count is cleared, in order to prevent
+                    users from re-reporting the same post that was marked as okay by staff.
+                </div>
+                <h4>Active reports: {{post.reportCount}}</h4>
+                <div v-if="reportsLoading" class="text-center">
+                    <div class="spinner-border text-info" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+
+                <table v-else class="table table-responsive table-sm">
+                    <tr>
+                        <th>Reporter</th>
+                        <th>Content</th>
+                    </tr>
+                    <tr v-for="report in reports">
+                        <td> <a :href="'/' + report.user.username" target="_blank">{{report.user.displayUsername}}</a></td>
+                        <td style="max-width:400px"><div class="user-content">{{report.textContent}}</div></td>
+                    </tr>
+                </table>
+                <div v-if="reports.length < 1"><em>No reports found.</em></div>
+                <div class="text-center mt-4">
+                    <button type="button" :disabled="reportsLoading" class="btn btn-info" @click="loadReports()" v-if="hasMore">Load more</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

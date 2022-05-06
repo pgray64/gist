@@ -75,6 +75,7 @@ parasails.registerComponent('manage-users', {
                       </td>
                   </tr>
               </table>
+              <div v-if="userList.length < 1"><em>No users found.</em></div>
           </div>
 
       </div>

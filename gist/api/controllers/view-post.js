@@ -81,7 +81,7 @@ module.exports = {
         createdAt: rawRebloggedPost.createdAt,
         userId: rawRebloggedPost.user.id,
         username: rawRebloggedPost.user.displayUsername,
-        ip: this.req.me.isSuperAdmin ? rawRebloggedPost.ip : null
+        ip: (this.req.me && this.req.me.isSuperAdmin) ? rawRebloggedPost.ip : null
       }
     }
     return {
@@ -97,7 +97,7 @@ module.exports = {
       rebloggedPost,
       canComment,
       isFollowing,
-      ip: this.req.me.isSuperAdmin ? post.ip : null
+      ip: (this.req.me && this.req.me.isSuperAdmin) ? post.ip : null
     };
 
   }

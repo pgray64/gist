@@ -20,11 +20,8 @@ module.exports = {
     let reportedPosts = await Post.find({
       where: {deletedAt: null},
       sort: 'reportCount desc',
-      select: ['title', 'reportCount'],
-      limit: 20
-    }).populate('postReports', {
-      limit: 20, // Don't need to see a huge amount of report text to see if they are worth investigating
-      sort: 'id desc'
+      select: ['title', 'reportCount', 'slug'],
+      limit: 25
     });
     return {
       reportedPosts

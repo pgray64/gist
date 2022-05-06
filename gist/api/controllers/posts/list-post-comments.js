@@ -50,7 +50,7 @@ module.exports = {
         username: c.user.username,
         displayUsername: c.user.displayUsername,
         createdAt: c.createdAt,
-        ip: this.req.me.isSuperAdmin ? c.ip : null
+        ip: (this.req.me && this.req.me.isSuperAdmin) ? c.ip : null
       }
     });
     return {

@@ -28,15 +28,20 @@ module.exports = {
 
 
   fn: async function ({postId, textContent}) {
+    try {
+      await PostReport.create({
+        user: this.req.me.id,
+        post: postId,
+        textContent
+      });
+    } catch (e) {
+      if (e.code === 'E_UNIQUE') {
+        return;
+      } else {
+        throw e;
+      }
+    }
 
-    await PostReport.create({
-      user: this.req.me.id,
-      post: postId,
-      textContent
-    }).intercept('E_UNIQUE', () => {
-      // They already reported this post - they don't need to know we are discarding the new one
-      this.res.sendStatus(200);
-    });
     await sails.sendNativeQuery('update post set "reportCount"="reportCount"+1 where id=$1', [postId]);
 
   }

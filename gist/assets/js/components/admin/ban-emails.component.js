@@ -61,10 +61,11 @@ parasails.registerComponent('ban-emails', {
                   <tr v-for="row in bannedEmails">
                       <td>{{row.emailAddress}}</td>
                       <td>
-                          <ajax-button :syncing="loadingBanEmailAction" class="btn btn-primary btn-sm" type="button" @click="setEmailBanned(row.emailAddress, false)">Unban</ajax-button>
+                          <button :disabled="loadingBanEmailAction" class="btn btn-primary btn-sm" type="button" @click="setEmailBanned(row.emailAddress, false)">Unban</button>
                       </td>
                   </tr>
               </table>
+              <div v-if="bannedEmails.length === 0"><em>No banned emails found.</em></div>
           </div>
 
       </div>

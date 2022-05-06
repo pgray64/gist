@@ -22,7 +22,7 @@ module.exports = {
 
   fn: async function ({postId}) {
 
-    await Post.update({id: postId}).update({reportCount: 0});
+    await Post.update({id: postId}).set({reportCount: 0});
 
   }
 

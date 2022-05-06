@@ -43,13 +43,13 @@ parasails.registerComponent('ban-ips', {
                       <label class="mr-2">Ban an IP</label>
                       <input class="form-control mr-2" type="text" placeholder="IP" v-model="ipToBan"/>
                       <span class="mr-1">for</span>
-                        <select v-model="banDurationDays" class="form-control mr-2">
-                          <option :value="0">Forever</option>
-                          <option :value="1">1 Day</option>
-                          <option :value="30">30 Days</option>
-                          <option :value="90">90 Days</option>
-                          <option :value="365">1 Year</option>
-                        </select>
+                      <select v-model="banDurationDays" class="form-control mr-2">
+                        <option :value="0">Forever</option>
+                        <option :value="1">1 Day</option>
+                        <option :value="30">30 Days</option>
+                        <option :value="90">90 Days</option>
+                        <option :value="365">1 Year</option>
+                      </select>
                       <ajax-button :syncing="loadingBanIPAction" class="btn btn-primary" type="button" @click="setIPBanned(ipToBan, true)">Ban</ajax-button>
                   </div>
               </div>
@@ -78,10 +78,11 @@ parasails.registerComponent('ban-ips', {
 
                       </td>
                       <td>
-                          <ajax-button :syncing="loadingBanIPAction" class="btn btn-primary btn-sm" type="button" @click="setIPBanned(row.ipAddress, false)">Unban</ajax-button>
+                          <button :disabled="loadingBanIPAction" class="btn btn-primary btn-sm" type="button" @click="setIPBanned(row.ipAddress, false)">Unban</button>
                       </td>
                   </tr>
               </table>
+              <div v-if="bannedIPs.length < 1"><em>No banned IP addresses found.</em></div>
           </div>
 
       </div>
@@ -120,7 +121,7 @@ parasails.registerComponent('ban-ips', {
               await Cloud.adminSetIpBanned(ip, newVal, this.banDurationDays);
               showToast('IP '+(newVal ? 'banned' : 'unbanned')+' successfully', 'success');
             } catch (e) {
-              showToast('Failed to ban IP', 'error');
+              showToast('Failed to set IP ban status', 'error');
             }
 
             this.loadingBanIPAction = false;

@@ -41,6 +41,9 @@ parasails.registerPage('post', {
     isOwnPost: function() {
       return this.isLoggedIn && this.me.id === this.userId;
     },
+    isAdmin: function() {
+      return this.isLoggedIn && this.me.isSuperAdmin;
+    }
   },
 
   //  ╦╔╗╔╔╦╗╔═╗╦═╗╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -114,8 +117,13 @@ parasails.registerPage('post', {
     },
     async performDelete() {
       this.deleteSyncing = true;
-      await Cloud.deletePost(this.id);
-      window.location = this.getUserUrl(this.me.username);
+      if (this.isAdmin) {
+        await Cloud.adminDeletePost(this.id);
+      } else {
+        await Cloud.deletePost(this.id);
+      }
+
+      window.location = this.getUserUrl(this.username);
     },
     openCommentDeleteConfirmation(comment) {
       let commentIndex = this.commentList.findIndex(function(c) { return c.id === comment.id; } );

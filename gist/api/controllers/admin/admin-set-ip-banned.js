@@ -43,9 +43,16 @@ module.exports = {
     await BannedIP.destroy({ipAddress});
     if (isBanned) {
       let expiresAt = durationDays > 0 ? (Date.now() + 1000 * 60 * 60 * 24 * durationDays) : 0;
-      await BannedIP.create({ipAddress, expiresAt}).intercept('E_UNIQUE', () => {
-        this.res.sendStatus(200);
-      });
+      try {
+        await BannedIP.create({ipAddress, expiresAt})
+      } catch (e) {
+        if (e.code === 'E_UNIQUE') {
+          return;
+        } else {
+          throw e;
+        }
+      }
+;
     }
   }
 

@@ -26,7 +26,8 @@ module.exports = {
       limit: 12
     };
     if (filter) {
-     query.where = { username: { contains: filter.toLowerCase()}};
+      query.where = { or: [
+        { username: { contains: filter.toLowerCase() } }, { emailAddress: { contains: filter.toLowerCase()} } ]};
     }
     let users = await User.find(query);
     return {

@@ -43,6 +43,7 @@ module.exports.routes = {
 
   // Admin pages
   'GET /admin/home': { action: 'admin/view-home' },
+  'GET /admin/post-reports/:id': { action: 'admin/view-post-reports' },
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
@@ -96,5 +97,7 @@ module.exports.routes = {
   'POST /api/v1/admin/admin-set-ip-banned': { action: 'admin/admin-set-ip-banned' },
   'POST /api/v1/admin/admin-list-reported-posts': { action: 'admin/admin-list-reported-posts' },
   'POST /api/v1/admin/admin-clear-post-reports': { action: 'admin/admin-clear-post-reports' },
+  'POST /api/v1/admin/admin-delete-post': { action: 'admin/admin-delete-post' },
+  'POST /api/v1/admin/admin-list-reports': { action: 'admin/admin-list-reports' },
 
 };

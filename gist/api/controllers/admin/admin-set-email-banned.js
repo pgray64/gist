@@ -38,10 +38,16 @@ module.exports = {
     }
     let baseEmail = sails.helpers.getBaseEmail.with({emailAddress});
     if (isBanned) {
+      try {
+        await BannedEmailAddress.create({emailAddress: baseEmail});
+      } catch (e) {
+        if (e.code === 'E_UNIQUE') {
+          return;
+        } else {
+          throw e;
+        }
+      }
 
-      await BannedEmailAddress.create({emailAddress: baseEmail}).intercept('E_UNIQUE', ()=> {
-        this.res.sendStatus(200);
-      });
 
 
     } else {
