@@ -21,7 +21,7 @@ module.exports = {
 
 
   fn: async function ({userId}) {
-
+    await PostComment.destroy({user: userId});
     let deletedPosts = await Post.update({user: userId}).set({deletedAt: Date.now()}).fetch();
     if (deletedPosts.length === 0) {
       return;

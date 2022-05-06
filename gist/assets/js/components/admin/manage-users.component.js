@@ -110,21 +110,30 @@ parasails.registerComponent('manage-users', {
         .then(async function(result) {
           if (result.isConfirmed) {
             this.loadingUserAction = true;
-            await Cloud.adminSetUserBanned(user.id, !user.isBanned);
-            showToast('User ' + (newVal ? 'banned' : 'unbanned')+ ' successfully', 'success');
-            user.isBanned = newVal;
+            try {
+              await Cloud.adminSetUserBanned(user.id, !user.isBanned);
+              showToast('User ' + (newVal ? 'banned' : 'unbanned')+ ' successfully', 'success');
+              user.isBanned = newVal;
+            } catch (e) {
+              showToast('Failed to update ban status for user', 'error');
+            }
             this.loadingUserAction = false;
           }
         });
 
     },
     async purgeUser(user) {
-      showConfirm('Purge user', 'Are you sure you want to purge the user "' + user.displayUsername + '"? ', 'Purge user', 'warning')
+      showConfirm('Purge user', 'Are you sure you want to purge posts and comments for the user "' + user.displayUsername + '"? ', 'Purge user', 'warning')
         .then(async function(result) {
           if (result.isConfirmed) {
             this.loadingUserAction = true;
-            await Cloud.adminPurgeUser(user.id);
-            showToast('User purged successfully', 'success');
+            try {
+              await Cloud.adminPurgeUser(user.id);
+              showToast('User purged successfully', 'success');
+            }
+            catch (e) {
+              showToast('Failed to purge user', 'error');
+            }
             this.loadingUserAction = false;
           }
         });
