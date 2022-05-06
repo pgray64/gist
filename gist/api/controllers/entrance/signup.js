@@ -71,9 +71,9 @@ the account verification message.)`,
       statusCode: 409,
       description: 'The provided username is unavailable.',
     },
-    emailBanned: {
+    banned: {
       statusCode: 403,
-      description: 'Provided email address is banned.'
+      description: 'Provided email address or IP is banned.'
     }
 
   },
@@ -92,8 +92,8 @@ the account verification message.)`,
       throw 'usernameAlreadyInUse';
     }
 
-    if ((await sails.helpers.isEmailBanned.with({emailAddress: newEmailAddress}))) {
-      throw 'emailBanned';
+    if ((await sails.helpers.admin.isEmailOrIpBanned.with({emailAddress: newEmailAddress, ipAddress: this.req.ip}))) {
+      throw 'banned';
     }
     // Build up data for the new user record and save it to the database.
     // (Also use `fetch` to retrieve the new ID so that we can use it below.)

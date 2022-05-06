@@ -62,7 +62,8 @@ module.exports = {
       contentType: 'reblog',
       slug,
       rebloggedPost: rebloggedPostId,
-      hotScore: rebloggedHotScore
+      hotScore: rebloggedHotScore,
+      ip: this.req.ip
     };
     let newPost = await Post.create(newFields).fetch();
 

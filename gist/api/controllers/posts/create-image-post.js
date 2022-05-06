@@ -103,7 +103,8 @@ module.exports = {
       imageContent: result.fd,
       contentType: 'image',
       slug,
-      hotScore
+      hotScore,
+      ip: this.req.ip
     };
     let newPost = await Post.create(newFields).fetch();
     return exits.success({postId: newPost.id, slug});

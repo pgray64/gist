@@ -27,7 +27,7 @@ module.exports = {
     }
     let post = await Post.findOne({
       where: {id, slug, deletedAt: null},
-      select: ['title', 'textContent', 'imageContent', 'contentType', 'createdAt', 'user', 'rebloggedPost']
+      select: ['title', 'textContent', 'imageContent', 'contentType', 'createdAt', 'user', 'rebloggedPost', 'ip']
     }, {user: true});
     if (!post) {
       throw 'notFound';
@@ -39,7 +39,7 @@ module.exports = {
     if (isReblog) {
       rawRebloggedPost = await Post.findOne({
         where: {id: post.rebloggedPost},
-        select: ['title', 'textContent', 'imageContent', 'contentType', 'createdAt', 'user', 'slug', 'deletedAt']
+        select: ['title', 'textContent', 'imageContent', 'contentType', 'createdAt', 'user', 'slug', 'deletedAt', 'ip']
       }, {user: true});
     }
     if (post.contentType === 'image') {
@@ -81,6 +81,7 @@ module.exports = {
         createdAt: rawRebloggedPost.createdAt,
         userId: rawRebloggedPost.user.id,
         username: rawRebloggedPost.user.displayUsername,
+        ip: this.req.me.isSuperAdmin ? rawRebloggedPost.ip : null
       }
     }
     return {
@@ -95,7 +96,8 @@ module.exports = {
       canReblog,
       rebloggedPost,
       canComment,
-      isFollowing
+      isFollowing,
+      ip: this.req.me.isSuperAdmin ? post.ip : null
     };
 
   }

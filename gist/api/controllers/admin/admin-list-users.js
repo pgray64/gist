@@ -21,9 +21,9 @@ module.exports = {
 
   fn: async function ({filter}) {
     let query = {
-      select: ['emailAddress', 'emailStatus', 'fullName', 'isSuperAdmin', 'displayUsername', 'isBanned' ],
+      select: ['emailAddress', 'emailStatus', 'fullName', 'isSuperAdmin', 'displayUsername', 'isBanned', 'tosAcceptedByIp' ],
       sort: 'id desc',
-      limit: 50
+      limit: 12
     };
     if (filter) {
      query.where = { username: { contains: filter.toLowerCase()}};

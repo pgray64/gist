@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Admin list banned emails',
+  friendlyName: 'Admin list banned ips',
 
 
   description: '',
@@ -22,16 +22,16 @@ module.exports = {
   fn: async function ({filter}) {
 
     let query = {
-      select: ['emailAddress', 'createdAt' ],
+      select: ['ipAddress', 'createdAt', 'expiresAt' ],
       sort: 'id desc',
       limit: 12
     };
     if (filter) {
-      query.where = { emailAddress: { contains: filter.toLowerCase()}};
+      query.where = { ipAddress: { contains: filter.toLowerCase()}};
     }
-    let emails = await BannedEmailAddress.find(query);
+    let ipAddresses = await BannedIP.find(query);
     return {
-      emails
+      ipAddresses
     }
 
   }

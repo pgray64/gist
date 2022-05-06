@@ -6,6 +6,7 @@
         <h6>
             <a :href="getUserUrl(username)" class="mr-1">{{username}}</a>
             <span class="text-dark font-italic small mr-3"><js-timestamp :at="createdAt"></js-timestamp></span>
+            <span v-if="ip" class="badge badge-pill badge-info">{{ip}}</span>
             <span class="float-sm-right">
                 <span v-if="isOwnPost">
                     <button type="button" @click="openDeleteConfirmation" class="btn my-1 btn-sm btn-outline-danger " v-if="!deleteConfirming"><span class="fa fa-trash-o mr-1"></span>Delete post</button>
@@ -30,7 +31,8 @@
             <div class="user-content" v-if="rebloggedPost">
                 <h6>
                     <a :href="getOriginalUserUrl(username)" class="mr-1">{{rebloggedPost.username}}</a>
-                    <span class="text-dark font-italic small"><js-timestamp :at="rebloggedPost.createdAt"></js-timestamp></span>
+                    <span class="text-dark font-italic small mr-3"><js-timestamp :at="rebloggedPost.createdAt"></js-timestamp></span>
+                    <span v-if="rebloggedPost.ip" class="badge badge-pill badge-info">{{rebloggedPost.ip}}</span>
                 </h6>
                 <h4>
                     <a :href="getOriginalUrl()">{{title}}</a>
@@ -80,7 +82,8 @@
                     </div>
                     <div>
                         <a :href="'/' + comment.username">{{comment.displayUsername}}</a>
-                        <span class="text-dark font-italic small"><js-timestamp :at="comment.createdAt" format="timeago"></js-timestamp></span>
+                        <span class="text-dark font-italic small mr-3"><js-timestamp :at="comment.createdAt" format="timeago"></js-timestamp></span>
+                        <span v-if="comment.ip" class="badge badge-pill badge-info">{{comment.ip}}</span>
                         <span class="float-right">
                             <button type="button"  @click="openCommentDeleteConfirmation(comment)" class="btn btn-link text-danger" v-if="isOwnComment(comment) && !comment.deleteConfirming"><span class="fa fa-trash-o"></span></button>
                             <span v-if="comment.deleteConfirming">

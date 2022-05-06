@@ -94,7 +94,7 @@ and exposed as \`req.me\`.)`
     if (userRecord.isBanned) {
       throw 'banned';
     }
-    if ((await sails.helpers.isEmailBanned.with({emailAddress: userRecord.emailAddress}))) {
+    if ((await sails.helpers.admin.isEmailOrIpBanned.with({emailAddress: userRecord.emailAddress, ipAddress: this.req.ip}))) {
       throw 'banned';
     }
 

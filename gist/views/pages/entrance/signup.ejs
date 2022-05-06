@@ -37,7 +37,7 @@
         </div>
         <cloud-error v-if="cloudError==='emailAlreadyInUse'">It looks like there's already an account with your email address. If you forgot your password, you can recover it <a href="password/forgot">here</a>.</cloud-error>
         <cloud-error v-else-if="cloudError==='usernameAlreadyInUse'">This username is not available.</cloud-error>
-          <cloud-error v-else-if="cloudError==='emailBanned'">This email address was banned for violating our terms of service.</cloud-error>
+          <cloud-error v-else-if="cloudError==='banned'">This account was banned for violating our terms of service.</cloud-error>
         <cloud-error v-else-if="cloudError"></cloud-error>
         <div class="form-group">
           <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Create account</ajax-button>

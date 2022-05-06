@@ -1,19 +1,23 @@
 module.exports = {
 
 
-  friendlyName: 'Admin set email banned',
+  friendlyName: 'Admin set ip banned',
 
 
   description: '',
 
 
   inputs: {
-    emailAddress: {
+    ipAddress: {
       type: 'string',
       required: true
     },
     isBanned: {
       type: 'boolean',
+      required: true
+    },
+    durationDays: {
+      type: 'number',
       required: true
     }
   },
@@ -31,21 +35,17 @@ module.exports = {
   },
 
 
-  fn: async function ({emailAddress, isBanned}) {
+  fn: async function ({ipAddress, isBanned, durationDays}) {
 
-    if (!emailAddress) {
+    if (!ipAddress) {
       throw 'badRequest';
     }
-    let baseEmail = sails.helpers.getBaseEmail.with({emailAddress});
+    await BannedIP.destroy({ipAddress});
     if (isBanned) {
-
-      await BannedEmailAddress.create({emailAddress: baseEmail}).intercept('E_UNIQUE', ()=> {
+      let expiresAt = durationDays > 0 ? (Date.now() + 1000 * 60 * 60 * 24 * durationDays) : 0;
+      await BannedIP.create({ipAddress, expiresAt}).intercept('E_UNIQUE', () => {
         this.res.sendStatus(200);
       });
-
-
-    } else {
-      await BannedEmailAddress.destroy({emailAddress: baseEmail});
     }
   }
 

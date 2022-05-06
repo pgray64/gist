@@ -44,7 +44,8 @@ module.exports = {
     let newFields = {
       user: this.req.me.id,
       post: postId,
-      textContent
+      textContent,
+      ip: this.req.ip
     };
     let newComment = await PostComment.create(newFields).fetch();
     return exits.success({commentId: newComment.id});

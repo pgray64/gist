@@ -33,7 +33,7 @@ module.exports = {
     }
     const perPage = sails.config.custom.userListCommentsPerPage;
     let rawComments = await PostComment.find({
-      select: ['textContent', 'user', 'createdAt'],
+      select: ['textContent', 'user', 'createdAt', 'ip'],
       where: {
         post: postId
       },
@@ -42,14 +42,15 @@ module.exports = {
       skip: page * perPage
     }).populate('user');
     let hasMore = rawComments.length > perPage;
-    let comments = rawComments.slice(0, perPage).map(function(c) {
+    let comments = rawComments.slice(0, perPage).map((c) => {
       return {
         id: c.id,
         user: c.user.id,
         textContent: c.textContent,
         username: c.user.username,
         displayUsername: c.user.displayUsername,
-        createdAt: c.createdAt
+        createdAt: c.createdAt,
+        ip: this.req.me.isSuperAdmin ? c.ip : null
       }
     });
     return {

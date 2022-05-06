@@ -17,6 +17,10 @@ module.exports = {
       maxLength: 500,
       description: 'Text content for comment'
     },
+    ip: {
+      type: 'string',
+      required: true
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

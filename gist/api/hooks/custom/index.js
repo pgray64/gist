@@ -179,10 +179,11 @@ will be disabled and/or hidden in the UI.
             }
 
             // Check email bans
-            if (await sails.helpers.isEmailBanned.with({emailAddress: loggedInUser.emailAddress})) {
+            if ((await sails.helpers.admin.isEmailOrIpBanned.with({emailAddress: loggedInUser.emailAddress, ipAddress: req.ip}))) {
               delete req.session.userId;
               return res.unauthorized();
             }
+
             // Add additional information for convenience when building top-level navigation.
             // (i.e. whether to display "Dashboard", "My Account", etc.)
             if (!loggedInUser.password || loggedInUser.emailStatus === 'unconfirmed') {
