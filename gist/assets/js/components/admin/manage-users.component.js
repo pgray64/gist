@@ -36,11 +36,11 @@ parasails.registerComponent('manage-users', {
           <div class="card-body">
               <div class="mb-2">
 
-                  <div class="form-inline">
+                  <form class="form-inline" onsubmit="return false">
                       <label class="mr-2">Users</label>
                       <input class="form-control mr-2" type="text" placeholder="Filter users" v-model="userSearchFilter"/>
-                      <ajax-button :syncing="loadingUsers" class="btn btn-primary" type="button" @click="searchUsers"></ajax-button>
-                  </div>
+                      <ajax-button :syncing="loadingUsers" class="btn btn-primary" type="submit" @click="searchUsers"></ajax-button>
+                  </form>
               </div>
               <table class="table table-responsive table-sm">
                   <tr>

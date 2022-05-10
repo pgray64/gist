@@ -38,21 +38,21 @@ parasails.registerComponent('ban-emails', {
           <div class="card-body">
               <div class="mb-2">
 
-                  <div class="form-inline">
+                  <form class="form-inline" onsubmit="return false">
                       <label class="mr-2">Ban an email address</label>
                       <input class="form-control mr-2" type="email" placeholder="Email Address" v-model="emailToBan"/>
-                      <ajax-button :syncing="loadingBanEmailAction" class="btn btn-primary" type="button" @click="setEmailBanned(emailToBan, true)">Ban</ajax-button>
-                  </div>
+                      <ajax-button :syncing="loadingBanEmailAction" class="btn btn-primary" type="submit" @click="setEmailBanned(emailToBan, true)">Ban</ajax-button>
+                  </form>
                   <div class="text-danger small" v-if="emailToBan && emailToBanInvalid">Email is invalid.</div>
               </div>
               <hr/>
               <div class="mb-2">
 
-                  <div class="form-inline">
+                  <form class="form-inline" onsubmit="return false">
                       <label class="mr-2">Banned emails</label>
                       <input class="form-control mr-2" type="text" placeholder="Filter banned emails" v-model="bannedEmailSearchFilter"/>
-                      <ajax-button :syncing="loadingBannedEmails" class="btn btn-primary" type="button" @click="searchBannedEmails">Search</ajax-button>
-                  </div>
+                      <ajax-button :syncing="loadingBannedEmails" class="btn btn-primary" type="submit" @click="searchBannedEmails">Search</ajax-button>
+                  </form>
               </div>
               <table class="table table-responsive table-sm">
                   <tr>

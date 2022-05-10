@@ -39,7 +39,7 @@ parasails.registerComponent('ban-ips', {
           <div class="card-body">
               <div class="mb-2">
 
-                  <div class="form-inline">
+                  <form class="form-inline" onsubmit="return false">
                       <label class="mr-2">Ban an IP</label>
                       <input class="form-control mr-2" type="text" placeholder="IP" v-model="ipToBan"/>
                       <span class="mr-1">for</span>
@@ -50,17 +50,17 @@ parasails.registerComponent('ban-ips', {
                         <option :value="90">90 Days</option>
                         <option :value="365">1 Year</option>
                       </select>
-                      <ajax-button :syncing="loadingBanIPAction" class="btn btn-primary" type="button" @click="setIPBanned(ipToBan, true)">Ban</ajax-button>
-                  </div>
+                      <ajax-button :syncing="loadingBanIPAction" class="btn btn-primary" type="submit" @click="setIPBanned(ipToBan, true)">Ban</ajax-button>
+                  </form>
               </div>
               <hr/>
               <div class="mb-2">
 
-                  <div class="form-inline">
+                  <form class="form-inline" onsubmit="return false">
                       <label class="mr-2">Banned IPs</label>
                       <input class="form-control mr-2" type="text" placeholder="Filter banned IPs" v-model="bannedIPSearchFilter"/>
-                      <ajax-button :syncing="loadingBannedIPs" class="btn btn-primary" type="button" @click="searchBannedIPs">Search</ajax-button>
-                  </div>
+                      <ajax-button :syncing="loadingBannedIPs" class="btn btn-primary" type="submit" @click="searchBannedIPs">Search</ajax-button>
+                  </form>
               </div>
               <table class="table table-responsive table-sm">
                   <tr>
