@@ -67,7 +67,7 @@
       </div>
     </div>
     <div class="alert alert-danger alert-dismissible" v-else-if="isBillingEnabled && cloudError">
-      There was an error updating your credit card information. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.
+      There was an error updating your credit card information. Please check your information and try again, or email <a href="mailto:<%= sails.config.custom.internalEmailAddress %>"><%= sails.config.custom.internalEmailAddress %></a> if the error persists.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -91,7 +91,7 @@
           <label>Credit card</label>
           <stripe-card-element :stripe-publishable-key="stripePublishableKey" :is-errored.sync="formErrors.newPaymentSource" v-model="formData.newPaymentSource" key="billing-card" ref="billingcardref"></stripe-card-element>
         </div>
-        <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+        <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or email <a href="mailto:<%= sails.config.custom.internalEmailAddress %>"><%= sails.config.custom.internalEmailAddress %></a> if the error persists.</small></p>
       </div>
       <div class="modal-footer flex-row-reverse justify-content-start">
         <ajax-button :syncing="syncing" class="btn btn-info">Save card</ajax-button>
