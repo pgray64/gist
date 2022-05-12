@@ -19,7 +19,7 @@ module.exports = {
 
 
   fn: async function () {
-    let path = require('path');
+    let url = require('url');
     let id = parseInt(this.req.param('id'));
     let slug = this.req.param('slug');
     if (!id || id < 1 || !slug) {
@@ -43,7 +43,7 @@ module.exports = {
       }, {user: true});
     }
     if (post.contentType === 'image') {
-      imageUrl = path.join(sails.config.custom.userContentS3EdgeUrl, post.imageContent);
+      imageUrl = url.resolve(sails.config.custom.userContentS3EdgeUrl, post.imageContent);
     }
 
     let canReblog = true; // Not logged-in user can click reblog, but will be redirected to login
@@ -76,7 +76,7 @@ module.exports = {
         title: rawRebloggedPost.title,
         isDeleted: rawRebloggedPost.deletedAt,
         textContent: rawRebloggedPost.deletedAt ? '' : rawRebloggedPost.textContent,
-        imageUrl: rawRebloggedPost.deletedAt ? '' : path.join(sails.config.custom.userContentS3EdgeUrl, rawRebloggedPost.imageContent),
+        imageUrl: rawRebloggedPost.deletedAt ? '' : url.resolve(sails.config.custom.userContentS3EdgeUrl, rawRebloggedPost.imageContent),
         contentType: rawRebloggedPost.contentType,
         createdAt: rawRebloggedPost.createdAt,
         userId: rawRebloggedPost.user.id,

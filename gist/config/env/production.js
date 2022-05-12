@@ -70,7 +70,7 @@ module.exports = {
       * https://sailsjs.com/config/datastores                                     *
       *                                                                           *
       ****************************************************************************/
-      ssl: { rejectUnauthorized: true },
+      ssl: { rejectUnauthorized: false },
 
     },
 
@@ -150,6 +150,7 @@ module.exports = {
     cors: {
       allowOrigins: [
         'https://gist.gg',
+        'http://127.0.0.1',
       ]
     },
 
@@ -221,7 +222,7 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     cookie: {
-      // secure: true,
+      secure: true,
       maxAge: 24 * 60 * 60 * 1000,  // 24 hours
     },
 
@@ -339,7 +340,7 @@ module.exports = {
   * this, just try deploying without setting it and see if it works.)       *
   *                                                                         *
   ***************************************************************************/
-  // port: 80,
+  port: 80,
 
 
 

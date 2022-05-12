@@ -10,6 +10,12 @@
  */
 
 module.exports.sockets = {
+  adapter: '@sailshq/socket.io-redis',
+  db: 1,
+  // NOTE: The tls setting needs to be in adapterOptions, see "Adapter options" in https://github.com/balderdashy/sails-hook-sockets/blob/master/lib/configure.js#L128.
+  adapterOptions: {
+    tls: { rejectUnauthorized: false },
+  },
 
   /***************************************************************************
   *                                                                          *

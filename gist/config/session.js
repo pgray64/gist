@@ -20,6 +20,8 @@ module.exports.session = {
   ***************************************************************************/
   secret: '79a26ccbb764b47d32e923e59e7bec38',
   adapter: '@sailshq/connect-redis',
+  db: 0,
+  tls: { rejectUnauthorized: false },
 
 
   /***************************************************************************

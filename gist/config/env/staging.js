@@ -34,13 +34,14 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
       // /\  Hard-code your staging db `url`.
       // ||  (or use system env var: `sails_datastores__default__url`)
       //--------------------------------------------------------------------------
+      ssl: false
     })
   }),
 
   sockets: Object.assign({}, PRODUCTION_CONFIG.sockets, {
 
     onlyAllowOrigins: [
-      'http://localhost:1337',
+      'http://127.0.0.1',
       // 'https://example-staging.herokuapp.com',
       // 'http://example-staging.herokuapp.com',
       // 'https://staging.example.com',
@@ -67,17 +68,21 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
     // /\  Hard-code your staging Redis server's `url` again here.
     // ||  (or use system env var: `sails_session__url`)
     //--------------------------------------------------------------------------
+    cookie: {
+      secure: false,
+      maxAge: 24 * 60 * 60 * 1000,  // 24 hours
+    },
   }),
 
   custom: Object.assign({}, PRODUCTION_CONFIG.custom, {
 
-    baseUrl: 'https://staging.example.com',
+    baseUrl:  'http://127.0.0.1',
     //--------------------------------------------------------------------------
     // /\  Hard-code the base URL where your staging environment is hosted.
     // ||  (or use system env var: `sails_custom__baseUrl`)
     //--------------------------------------------------------------------------
 
-    internalEmailAddress: 'support+staging@example.com',
+    // internalEmailAddress: 'support+staging@example.com',
     //--------------------------------------------------------------------------
     // /\  Hard-code the email address that should receive support/contact form
     // ||  messages in staging (or use `sails_custom__internalEmailAddress`)
@@ -90,7 +95,8 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
     // /\  Hard-code credentials to use in staging for other 3rd party APIs, etc.
     // ||  (or use system environment variables prefixed with "sails_custom__")
     //--------------------------------------------------------------------------
-
+    userContentS3Bucket: 'gist-dev-cdn',
+    userContentS3EdgeUrl: 'https://gist-dev-cdn.nyc3.cdn.digitaloceanspaces.com',
   })
 
 });
