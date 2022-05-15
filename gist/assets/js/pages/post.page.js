@@ -72,6 +72,7 @@ parasails.registerPage('post', {
     showAddComment() {
       if (!this.isLoggedIn) {
         window.location = '/login';
+        return;
       }
       this.addingComment = true;
     },
@@ -163,6 +164,10 @@ parasails.registerPage('post', {
       this.loadingFollow = false;
     },
     reportPostClicked() {
+      if (!this.isLoggedIn) {
+        window.location = '/login';
+        return;
+      }
       showTextPopup('Report post', 'Describe how this post violates Gist\'s terms of service or content policy.', 'Send report')
         .then(async (result) => {
           if (result.isConfirmed) {

@@ -16,3 +16,7 @@ create unique index UX_postreport_user_post on postreport("user", "post");
 create index IX_post_reportCount on post("reportCount" desc) where "deletedAt" is null;
 alter table postreport add constraint FK_postreport_post foreign key ("post") references post(id);
 alter table postreport add constraint FK_postreport_user foreign key ("user") references "user"(id);
+-- 5/14/22 Add unique indexes for user tokens
+create unique index "user_passwordResetToken" ON "user" ("passwordResetToken") where "passwordResetToken"<>'';
+create unique index "user_emailProofToken" ON "user" ("emailProofToken") where "emailProofToken"<>'';
+-- ************************ Above scripts ran on prod db on 5/14/22 at 11PM ET *****************************************

@@ -40,6 +40,9 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
 
   sockets: Object.assign({}, PRODUCTION_CONFIG.sockets, {
 
+    adapterOptions: {
+      tls: false,
+    },
     onlyAllowOrigins: [
       'http://127.0.0.1',
       // 'https://example-staging.herokuapp.com',
@@ -72,6 +75,7 @@ module.exports = Object.assign({}, PRODUCTION_CONFIG, {
       secure: false,
       maxAge: 24 * 60 * 60 * 1000,  // 24 hours
     },
+    tls: false
   }),
 
   custom: Object.assign({}, PRODUCTION_CONFIG.custom, {

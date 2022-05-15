@@ -185,8 +185,7 @@ module.exports = {
     * > (For a full list, see https://sailsjs.com/plugins/sessions)            *
     *                                                                          *
     ***************************************************************************/
-    // adapter: '@sailshq/connect-redis',
-    // url: 'redis://user:password@localhost:6379/databasenumber',
+    tls: { rejectUnauthorized: false },
     //--------------------------------------------------------------------------
     // /\   OR, to avoid checking it in to version control, you might opt to
     // ||   set sensitive credentials like this using an environment variable.
@@ -254,6 +253,12 @@ module.exports = {
     onlyAllowOrigins: [
       'https://gist.gg'
     ],
+    adapter: '@sailshq/socket.io-redis',
+    db: 1,
+    // NOTE: The tls setting needs to be in adapterOptions, see "Adapter options" in https://github.com/balderdashy/sails-hook-sockets/blob/master/lib/configure.js#L128.
+    adapterOptions: {
+      tls: { rejectUnauthorized: false },
+    },
 
 
     /***************************************************************************
