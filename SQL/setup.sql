@@ -19,4 +19,3 @@ alter table postreport add constraint FK_postreport_user foreign key ("user") re
 -- 5/14/22 Add unique indexes for user tokens
 create unique index "user_passwordResetToken" ON "user" ("passwordResetToken") where "passwordResetToken"<>'';
 create unique index "user_emailProofToken" ON "user" ("emailProofToken") where "emailProofToken"<>'';
--- ************************ Above scripts ran on prod db on 5/14/22 at 11PM ET *****************************************
