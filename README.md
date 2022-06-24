@@ -1,15 +1,19 @@
 # gist
 
 ### About
-Gist, formerly hosted at gist.gg, is basically a Tumblr clone. Here are some of its features:
+Gist, formerly hosted at gist.gg, is basically a Tumblr clone. It is powered by Sails.js, Vue, Postgres, Redis, any S3 compatible object store. 
+Here are some of its features:
 
-- Rich text posts
+- Rich text posts with: 
+  - Embedded link are re-writing to have an external content warning
+  - Whitelist based html sanitizer
 - Image posts (with re-encoding of images during upload)
 - Post comments
 - Reblogging of posts
 - Post popularity ranking based on reblogs and time decay
+- User reporting of abusive content
 - Admin system with IP/Email/account banning
-- Powered by Sails.js, Vue, Postgres, Redis, any S3 compatible object store
+
 
 
 ### Setup
