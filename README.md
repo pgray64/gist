@@ -1,4 +1,4 @@
-### Gist.gg
+# [Gist.gg](https://gist.gg)
 
 ## What is Gist.gg?
 
@@ -27,7 +27,8 @@ Yes. Gist.gg shares 4chan's commitment to anonymity and lack of social hierarchy
 ## Does Gist.gg have an algorithm?
 
 Gist.gg uses a simple hot algorithm to surface recent and active posts, but does not use engagement-based ranking, personalization, or algorithmic amplification of any kind.
-Is Gist.gg anonymous?
+
+## Is Gist.gg anonymous?
 
 Yes. Gist.gg is anonymous by default. No account or personal information is required to participate.
 
